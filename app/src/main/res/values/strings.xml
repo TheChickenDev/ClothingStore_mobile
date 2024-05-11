@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">ClothingStore</string>
+    <string name="activity_login_username_hint">Username</string>
+    <string name="activity_login_password_hint">Password</string>
+    <string name="activity_login_login_btn">Login</string>
+    <string name="activity_login_logo_desc">Logo</string>
+    <string name="activity_google_logo_desc">Google</string>
+    <string name="activity_facebook_logo_desc">Facebook</string>
+    <string name="activity_login_signup_btn"><u>Sign up</u></string>
+    <string name="activity_login_signup_label">Don\'t have an account?</string>
+    <string name="activity_login_get_password_btn"><u>Get password</u></string>
+    <string name="activity_login_get_password_label">Forgot your password?</string>
+    <string name="activity_login_login_with_label">Login with</string>
+</resources>
