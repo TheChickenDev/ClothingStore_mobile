@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">ClothingStore</string>
-    <string name="activity_login_username_hint">Username</string>
-    <string name="activity_login_password_hint">Password</string>
-    <string name="activity_login_login_btn">Login</string>
+
+    <string name="input_email_hint">Email</string>
+    <string name="input_password_hint">Password</string>
+    <string name="input_name_hint">Full name</string>
+    <string name="input_address_hint">Address</string>
+    <string name="input_phone_hint">Phone number</string>
+
+    <string name="activity_login_login_btn">Log in</string>
     <string name="activity_login_logo_desc">Logo</string>
     <string name="activity_google_logo_desc">Google</string>
     <string name="activity_facebook_logo_desc">Facebook</string>
@@ -11,4 +16,8 @@
     <string name="activity_login_get_password_btn"><u>Get password</u></string>
     <string name="activity_login_get_password_label">Forgot your password?</string>
     <string name="activity_login_login_with_label">Login with</string>
+
+    <string name="activity_register_login_label">Already have an account?</string>
+    <string name="activity_register_login_btn"><u>Sign in</u></string>
+    <string name="activity_register_register_btn"><u>Sign up</u></string>
 </resources>
