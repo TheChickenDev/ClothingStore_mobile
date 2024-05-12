@@ -1,8 +1,8 @@
-package com.example.clothingstore.service;
+package utils;
 
-import com.example.clothingstore.model.Product;
-import com.example.clothingstore.model.SuccessResponse;
-import com.example.clothingstore.model.Users;
+import models.Product;
+import models.SuccessResponse;
+import models.Users;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

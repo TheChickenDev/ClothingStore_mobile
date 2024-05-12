@@ -1,4 +1,4 @@
-package com.example.clothingstore.model;
+package models;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;

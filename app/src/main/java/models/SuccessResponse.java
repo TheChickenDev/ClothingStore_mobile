@@ -1,4 +1,4 @@
-package com.example.clothingstore.model;
+package models;
 
 public class SuccessResponse <T> {
     private String status;

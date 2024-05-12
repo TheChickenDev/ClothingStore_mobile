@@ -1,4 +1,4 @@
-package com.example.clothingstore.activity;
+package com.example.clothingstore;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,11 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.example.clothingstore.R;
-import com.example.clothingstore.model.SuccessResponse;
-import com.example.clothingstore.model.Users;
-import com.example.clothingstore.retrofit.ApiRetrofit;
-import com.example.clothingstore.service.ApiService;
+
+import models.SuccessResponse;
+import models.Users;
+import utils.ApiRetrofit;
+import utils.ApiService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
