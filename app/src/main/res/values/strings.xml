@@ -3,6 +3,7 @@
 
     <string name="input_email_hint">Email</string>
     <string name="input_password_hint">Password</string>
+    <string name="input_confirm_password_hint">Confirm password</string>
     <string name="input_name_hint">Full name</string>
     <string name="input_address_hint">Address</string>
     <string name="input_phone_hint">Phone number</string>

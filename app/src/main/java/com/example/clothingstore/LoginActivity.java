@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -20,7 +18,7 @@ import java.util.Objects;
 import apis.APIService;
 import classes.PreferencesManager;
 import models.SuccessResponseModel;
-import models.LoginResponseModel;
+import models.AuthResponseModel;
 import models.UserModel;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,58 +51,39 @@ public class LoginActivity extends AppCompatActivity {
         btn_login = findViewById(R.id.login_btn_login);
         btn_register = findViewById(R.id.login_btn_register);
         btn_get_password = findViewById(R.id.login_btn_get_password);
-        input_email.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                String email = s.toString();
-//                Validater validate = new Validater();
-//                if (validate.validateEmail(email)) {
-//                    layout_email.setError("Email không hợp lệ");
-//                } else {
-//                    layout_email.setError(null);
-//                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        input_password.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                String password = s.toString();
-//                Validater validate = new Validater();
-//                if (validate.validatePassword(password)) {
-//                    layout_password.setError("Mật khẩu không hợp lệ");
-//                } else {
-//                    layout_password.setError(null);
-//                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         btn_login.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
                 String email = Objects.requireNonNull(input_email.getText()).toString().trim();
                 String password = Objects.requireNonNull(input_password.getText()).toString().trim();
-                Login(email, password);
+                boolean isValidForm = true;
+                if (email.isEmpty()) {
+                    layout_email.setError("Email is required");
+                    isValidForm = false;
+                } else {
+                    layout_email.setError(null);
+                }
+                if (password.isEmpty()) {
+                    layout_password.setError("Password is required");
+                    isValidForm = false;
+                } else {
+                    layout_password.setError(null);
+                }
+                if (isValidForm) {
+                    Login(email, password);
+                }
             }
+        });
+        Intent registerIntent = new Intent(this, RegisterActivity.class);
+        btn_register.setOnClickListener(v -> {
+            startActivity(registerIntent);
+            finish();
+        });
+        Intent getPasswordIntent = new Intent(this, MainActivity.class);
+        btn_get_password.setOnClickListener(v -> {
+            startActivity(getPasswordIntent);
+            finish();
         });
     }
 
@@ -118,13 +97,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void Login(String email, String password) {
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
         Intent intent = new Intent(this, MainActivity.class);
-        apiService.login(email, password).enqueue(new Callback<SuccessResponseModel<LoginResponseModel>>() {
+        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService.login(email, password).enqueue(new Callback<SuccessResponseModel<AuthResponseModel>>() {
             @Override
-            public void onResponse(@NonNull Call<SuccessResponseModel<LoginResponseModel>> call, @NonNull Response<SuccessResponseModel<LoginResponseModel>> response) {
+            public void onResponse(@NonNull Call<SuccessResponseModel<AuthResponseModel>> call, @NonNull Response<SuccessResponseModel<AuthResponseModel>> response) {
                 if (response.isSuccessful()) {
-                    SuccessResponseModel<LoginResponseModel> successResponse = response.body();
+                    SuccessResponseModel<AuthResponseModel> successResponse = response.body();
                     if (successResponse != null) {
                         if (successResponse.getData() != null) {
                             UserModel user = successResponse.getData().getUser();
@@ -139,17 +118,14 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, successResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
-                    // Handle the LoginResponseData
                 } else {
                     int statusCode = response.code();
                     Toast.makeText(LoginActivity.this, "Lỗi rồi kìa! Mã lỗi: " + statusCode, Toast.LENGTH_SHORT).show();
-                    // Handle the error
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<SuccessResponseModel<LoginResponseModel>> call, @NonNull Throwable t) {
-                // Handle the failure
+            public void onFailure(@NonNull Call<SuccessResponseModel<AuthResponseModel>> call, @NonNull Throwable t) {
                 Toast.makeText(LoginActivity.this, "Lỗi rồi kìa! (" + t.getMessage() + ")", Toast.LENGTH_SHORT).show();
             }
         });

@@ -1,6 +1,6 @@
 package models;
 
-public class LoginResponseModel {
+public class AuthResponseModel {
     String access_token;
     String refresh_token;
     UserModel user;

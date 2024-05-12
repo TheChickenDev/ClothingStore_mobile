@@ -32,9 +32,22 @@ public class PreferencesManager {
     }
     public boolean isUserLoggedOut() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
+        boolean isAccessTokenEmpty = sharedPreferences.getString("Access_token", "").isEmpty();
+        boolean isRefreshTokenEmpty = sharedPreferences.getString("Refresh_token", "").isEmpty();
         boolean isEmailEmpty = sharedPreferences.getString("Email", "").isEmpty();
         boolean isPasswordEmpty = sharedPreferences.getString("Password", "").isEmpty();
         boolean isIdEmpty = sharedPreferences.getString("Id", "").isEmpty();
-        return isEmailEmpty || isPasswordEmpty || isIdEmpty;
+        return isAccessTokenEmpty || isRefreshTokenEmpty || isEmailEmpty || isPasswordEmpty || isIdEmpty;
+    }
+
+    public void removeLoginDetails() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("Access_token");
+        editor.remove("Refresh_token");
+        editor.remove("Email");
+        editor.remove("Password");
+        editor.remove("Id");
+        editor.apply();
     }
 }

@@ -1,14 +1,18 @@
 package utils;
 
-public class Validater {
+public class Validator {
     public boolean validateEmail(String email) {
         String regex = "^[\\w\\-.]+@([\\w-]+\\.)+[\\w-]{2,}$";
-        return !email.matches(regex);
+        return email.matches(regex);
     }
 
     public boolean validatePassword(String password) {
         String regex = "^((?=\\S*?[A-Z])(?=\\S*?[a-z])(?=\\S*?[0-9])(?=\\S*?[^\\w\\s]).{6,})\\S$";
-        return !password.matches(regex);
+        return password.matches(regex);
+    }
+
+    public boolean validateConfirmPassword(String password, String confirm_password) {
+        return password.equals(confirm_password);
     }
 
     public boolean validatePhoneNumber(String phoneNumber) {
