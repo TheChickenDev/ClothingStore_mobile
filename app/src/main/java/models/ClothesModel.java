@@ -5,24 +5,42 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class ClothesModel implements Serializable {
-    String _id;
-    String name;
-    String img;
-    String price;
+    @SerializedName("_id")
+    private String id;
+    @SerializedName("sold")
+    private String sold;
+    @SerializedName("name")
+    private String name;
+    @SerializedName("desc")
+    private String desc;
+    @SerializedName("price")
+    private String price;
+    @SerializedName("img")
+    private String img;
 
-    public ClothesModel(String _id, String name, String img, String price) {
-        this._id = _id;
+    public ClothesModel(String id, String sold, String name, String desc, String price, String img) {
+        this.id = id;
+        this.sold = sold;
         this.name = name;
-        this.img = img;
+        this.desc = desc;
         this.price = price;
+        this.img = img;
     }
 
-    public String get_id() {
-        return _id;
+    public String getId() {
+        return id;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getSold() {
+        return sold;
+    }
+
+    public void setSold(String sold) {
+        this.sold = sold;
     }
 
     public String getName() {
@@ -33,12 +51,12 @@ public class ClothesModel implements Serializable {
         this.name = name;
     }
 
-    public String getImg() {
-        return img;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public String getPrice() {
@@ -47,5 +65,13 @@ public class ClothesModel implements Serializable {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

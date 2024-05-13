@@ -1,9 +1,9 @@
 package models;
 
 public class SuccessResponseModel<T> {
-    String status;
-    String message;
-    T data;
+    private String status;
+    private String message;
+    private T data;
 
     public SuccessResponseModel(String status, String message, T data) {
         this.status = status;

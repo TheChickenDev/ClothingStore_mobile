@@ -51,7 +51,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHo
                 int position = holder.getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     Intent intent = new Intent(v.getContext(), HomeActivity.class);
-                    intent.putExtra("CATEGORY_ID", cate.get_id());
+                    intent.putExtra("CATEGORY_ID", cate.getId());
                     intent.putExtra("CATEGORY_IMAGE", cate.getImg());
                     intent.putExtra("CATEGORY_NAME", cate.getName());
                     intent.putExtra("CATEGORY_PRICE", cate.getPrice());

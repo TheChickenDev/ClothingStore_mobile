@@ -14,7 +14,7 @@ import retrofit2.http.POST;
 public interface APIService {
 
     @GET("product/get")
-    Call<List<ClothesModel>> getClothesAll();
+    Call<SuccessResponseModel<ClothesModel>> getClothesAll();
     @FormUrlEncoded
     @POST("user/login")
     Call<SuccessResponseModel<LoginResponseModel>> login(@Field("email") String email, @Field("password") String password);
