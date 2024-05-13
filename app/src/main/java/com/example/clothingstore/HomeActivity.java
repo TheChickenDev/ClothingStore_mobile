@@ -1,7 +1,10 @@
 package com.example.clothingstore;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,31 +25,35 @@ import utils.RetrofitClient;
 
 public class HomeActivity extends AppCompatActivity {
 
-    RecyclerView rcCate;
+    RecyclerView rcItem;
+    ImageView imgItem;
+    TextView txtItemName, txtItemPrice;
     ClothesAdapter clothesAdapter;
     APIService apiService;
     List<ClothesModel> clothesList;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-//        initializeBottomBar();
 
-//        int selectedMenuItemId = getIntent().getIntExtra("SELECTED_MENU_ITEM_ID", R.id.home);
-//        bottomNavigationView.getMenu().findItem(selectedMenuItemId).setChecked(true);
+        rcItem = findViewById(R.id.rvBestSeller);
+        imgItem = findViewById(R.id.cate_image);
+        txtItemName = findViewById(R.id.cate_name);
+        txtItemPrice = findViewById(R.id.cate_price);
 
-        Log.d("Activity", "MainActivity: onCreate: started.");
+        Log.d("Activity", "HomeActivity: onCreate: started.");
         mappingView();
         clothesList = new ArrayList<>();
 
-        rcCate.setHasFixedSize(true);
+        rcItem.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
-        rcCate.setLayoutManager(layoutManager);
+        rcItem.setLayoutManager(layoutManager);
 //        int spaceInPixels = getResources().getDimensionPixelSize(R.dimen.margin_15);
-//        rcCate.addItemDecoration(new SpacesItemDecoration(spaceInPixels));
+//        rcItem.addItemDecoration(new SpacesItemDecoration(spaceInPixels));
         clothesAdapter = new ClothesAdapter(HomeActivity.this, clothesList);
-        rcCate.setAdapter(clothesAdapter);
+        rcItem.setAdapter(clothesAdapter);
         GetCategory();
     }
 
@@ -58,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     clothesList = response.body();
                     clothesAdapter = new ClothesAdapter(HomeActivity.this, clothesList);
-                    rcCate.setAdapter(clothesAdapter);
+                    rcItem.setAdapter(clothesAdapter);
                     clothesAdapter.notifyDataSetChanged();
                 } else {
                     int statusCode = response.code();
@@ -72,6 +79,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void mappingView() {
-        rcCate = findViewById(R.id.rvBestSeller);
+        rcItem = findViewById(R.id.rvBestSeller);
     }
 }

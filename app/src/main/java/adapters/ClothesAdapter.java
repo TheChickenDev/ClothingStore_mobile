@@ -1,6 +1,7 @@
 package adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import models.ClothesModel;
+
+import com.bumptech.glide.Glide;
+import com.example.clothingstore.HomeActivity;
 import com.example.clothingstore.R;
 
 public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHolder> {
@@ -35,40 +39,37 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
+        ClothesModel cate = clothesList.get(position);
+        holder.txtClothesName.setText(cate.getName());
+        holder.txtClothesPrice.setText(cate.getPrice());
+        Glide.with(context)
+                .load(cate.getImg())
+                .into(holder.imgClothes);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    Intent intent = new Intent(v.getContext(), HomeActivity.class);
+                    intent.putExtra("CATEGORY_ID", cate.get_id());
+                    intent.putExtra("CATEGORY_IMAGE", cate.getImg());
+                    intent.putExtra("CATEGORY_NAME", cate.getName());
+                    intent.putExtra("CATEGORY_PRICE", cate.getPrice());
+                    v.getContext().startActivity(intent);
+                }
+            }
+        });
     }
 
-//    @Override
-//    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-//        Clothes cate = clothesList.get(position);
-//        holder.txtCategoryName.setText(cate.getName());
-//        holder.txtCategoryDescription.setText(cate.getPrice());
-//        Glide.with(context)
-//                .load(cate.getImg())
-//                .into(holder.imgCategory);
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int position = holder.getAdapterPosition();
-//                if (position != RecyclerView.NO_POSITION) {
-//                    Intent intent = new Intent(v.getContext(), FoodListActivity.class);
-//                    intent.putExtra("CATEGORY_ID", cate.getId());
-//                    intent.putExtra("CATEGORY_NAME", cate.getName());
-//                    v.getContext().startActivity(intent);
-//                }
-//            }
-//        });
-//    }
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public ImageView imgCategory;
-        public TextView txtCategoryName;
-        public TextView txtCategoryDescription;
+        public ImageView imgClothes;
+        public TextView txtClothesName;
+        public TextView txtClothesPrice;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgCategory = itemView.findViewById(R.id.cate_image);
-            txtCategoryName = itemView.findViewById(R.id.cate_name);
-            txtCategoryDescription = itemView.findViewById(R.id.cate_desc);
+            imgClothes = itemView.findViewById(R.id.cate_image);
+            txtClothesName = itemView.findViewById(R.id.cate_name);
+            txtClothesPrice = itemView.findViewById(R.id.cate_price);
         }
     }
 
