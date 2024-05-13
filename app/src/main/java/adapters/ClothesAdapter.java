@@ -1,7 +1,9 @@
 package adapters;
 
 import android.content.Context;
+
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,70 +13,65 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.clothingstore.HomeActivity;
+import com.example.clothingstore.R;
 
 import java.util.List;
 
 import models.ClothesModel;
 
-import com.bumptech.glide.Glide;
-import com.example.clothingstore.HomeActivity;
-import com.example.clothingstore.R;
-
 public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHolder> {
     Context context;
-    List<ClothesModel> clothesList;
-
-
-    public ClothesAdapter(Context context, List<ClothesModel> clothesList) {
+    List<ClothesModel> array;
+    public ClothesAdapter(Context context, List<ClothesModel> array) {
         this.context = context;
-        this.clothesList = clothesList;
+        this.array = array;
     }
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_clothes, null);
-        return new MyViewHolder(view);
+        MyViewHolder myViewHolder = new MyViewHolder(view);
+        return myViewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        ClothesModel cate = clothesList.get(position);
-        holder.txtClothesName.setText(cate.getName());
-        holder.txtClothesPrice.setText(cate.getPrice());
+        ClothesModel clothesModel = array.get(position);
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), HomeActivity.class);
+//                Bundle b = new Bundle();
+//                b.putString("idclothes", clothesModel.getId());
+//                b.putString("imgclothes", clothesModel.getImg());
+//                b.putString("nameclothes", clothesModel.getName());
+//                b.putString("priceclothes", clothesModel.getPrice());
+//                intent.putExtras(b);
+//                v.getContext().startActivity(intent);
+//            }
+//        });
+        holder.nameSP.setText(clothesModel.getName());
+        holder.priceSP.setText(clothesModel.getPrice());
         Glide.with(context)
-                .load(cate.getImg())
-                .into(holder.imgClothes);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    Intent intent = new Intent(v.getContext(), HomeActivity.class);
-                    intent.putExtra("CATEGORY_ID", cate.getId());
-                    intent.putExtra("CATEGORY_IMAGE", cate.getImg());
-                    intent.putExtra("CATEGORY_NAME", cate.getName());
-                    intent.putExtra("CATEGORY_PRICE", cate.getPrice());
-                    v.getContext().startActivity(intent);
-                }
-            }
-        });
-    }
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public ImageView imgClothes;
-        public TextView txtClothesName;
-        public TextView txtClothesPrice;
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imgClothes = itemView.findViewById(R.id.cate_image);
-            txtClothesName = itemView.findViewById(R.id.cate_name);
-            txtClothesPrice = itemView.findViewById(R.id.cate_price);
-        }
+                .load(clothesModel.getImg())
+                .into(holder.images);
     }
 
     @Override
     public int getItemCount() {
-        return clothesList == null ? 0 : clothesList.size();
+        return array == null ? 0 : array.size();
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public ImageView images;
+        public TextView nameSP, priceSP;
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            images = (ImageView) itemView.findViewById(R.id.cate_image);
+            nameSP = (TextView) itemView.findViewById(R.id.cate_name);
+            nameSP = (TextView) itemView.findViewById(R.id.cate_price);
+        }
     }
 }

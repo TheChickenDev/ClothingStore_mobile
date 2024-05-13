@@ -16,13 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import adapters.ClothesAdapter;
 import apis.APIService;
 import models.ClothesModel;
-import models.SuccessResponseModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,51 +28,45 @@ import utils.RetrofitClient;
 
 public class HomeActivity extends AppCompatActivity {
 
-    ImageView imageProduct;
-    TextView tvNameProduct, tvPrice;
-
-    public static String removeHtmlTags(String htmlDescription) {
-        // Sử dụng Html.fromHtml() với mode legacy để loại bỏ các thẻ HTML
-        return Html.fromHtml(htmlDescription, Html.FROM_HTML_MODE_LEGACY).toString();
-    }
+    RecyclerView rcClothes;
+    ClothesAdapter clothesAdapter;
+    APIService apiService;
+    List<ClothesModel> clothesModelList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        imageProduct = findViewById(R.id.cate_image);
-        tvNameProduct = findViewById(R.id.cate_name);
-        tvPrice = findViewById(R.id.cate_price);
-
-        String productId = "66116fe4f1bf7f8c4986bd5a";
-        APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
-        apiService.getClothesAll().enqueue(new Callback<SuccessResponseModel<ClothesModel>>() {
+        AnhXa();
+        GetCategory();
+    }
+    private void AnhXa() {
+        rcClothes = (RecyclerView) findViewById(R.id.rvBestSeller);
+    }
+    private void GetCategory() {
+        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService.getCategoryAll().enqueue(new Callback<List<ClothesModel>>() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
-            public void onResponse(Call<SuccessResponseModel<ClothesModel>> call, Response<SuccessResponseModel<ClothesModel>> response) {
+            public void onResponse(@NonNull Call<List<ClothesModel>> call, @NonNull Response<List<ClothesModel>> response) {
                 if (response.isSuccessful()) {
-                    SuccessResponseModel<ClothesModel> successResponse = response.body();
-                    ClothesModel product;
-                    if (successResponse !=null){
-                        product = successResponse.getData();
-//                        tvSold.setText(product.getSold());
-                        tvNameProduct.setText(product.getName());
-                        tvPrice.setText(product.getPrice());
-                        String des = product.getDesc();
-                        String processDes = removeHtmlTags(des);
-                        // Hien avatar ra imageView
-                        Glide.with(HomeActivity.this).load(product.getImg()).into(imageProduct);
-
-                    } else {
-                        Toast.makeText(HomeActivity.this, "User not found!", Toast.LENGTH_SHORT).show();
-                    }
-
+                    clothesModelList = response.body();
+                    clothesAdapter = new ClothesAdapter( HomeActivity.this, clothesModelList);
+                    rcClothes.setHasFixedSize(true);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
+                            LinearLayoutManager.HORIZONTAL, false);
+                    rcClothes.setLayoutManager(layoutManager);
+                    rcClothes.setAdapter(clothesAdapter);
+                    clothesAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(HomeActivity.this, "Failed to fetch user details!", Toast.LENGTH_SHORT).show();
+                    int statusCode = response.code();
+                    System.out.println("Mã lỗi: " + statusCode);
                 }
             }
+
             @Override
-            public void onFailure(Call<SuccessResponseModel<ClothesModel>> call, Throwable t) {
-                Toast.makeText(HomeActivity.this, "Network error! Please try again later.", Toast.LENGTH_SHORT).show();
+            public void onFailure(@NonNull Call<List<ClothesModel>> call, @NonNull Throwable t) {
+                String message = t.getMessage() != null ? t.getMessage() : "Lỗi rồi";
+                Log.d("log", message);
             }
         });
     }
