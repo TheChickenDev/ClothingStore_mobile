@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.HomeActivity"
+    tools:ignore="MissingConstraints">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="411dp"
+        android:layout_height="45dp"
+        android:layout_weight="5"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="16dp">
+
+        <androidx.appcompat.widget.SearchView
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="3"
+            android:background="@drawable/shapebgsearch"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@null"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:scaleType="centerInside"
+            android:src="@drawable/cart">
+        </ImageButton>
+
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="18dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:scaleType="centerInside"
+            android:src="@drawable/messge">
+        </ImageButton>
+    </LinearLayout>
+
+
+    <ViewFlipper
+        android:id="@+id/viewFlipper"
+        android:layout_width="380dp"
+        android:layout_height="190dp"
+        android:layout_marginTop="8dp"
+        android:autoStart="true"
+        android:flipInterval="4000"
+        android:inAnimation="@android:anim/slide_in_left"
+        android:outAnimation="@android:anim/slide_out_right"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/sale1" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/sale2"/>
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/sale3"/>
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/sale4"/>
+
+    </ViewFlipper>
+
+
+    <ScrollView
+        android:layout_width="380dp"
+        android:layout_height="550dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/viewFlipper"
+        tools:layout_editor_absoluteX="15dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="380dp"
+            android:layout_height="550dp"
+            android:layout_marginTop="8dp"
+            tools:layout_editor_absoluteX="15dp">
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/list_best_seller"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvBestSeller"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView1" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/list_new_arrivals"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvBestSeller" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvNewArrivals"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="411dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintVertical_bias="1.0"
+        app:menu="@menu/bottom_navigation_menu" />
+</androidx.constraintlayout.widget.ConstraintLayout>
