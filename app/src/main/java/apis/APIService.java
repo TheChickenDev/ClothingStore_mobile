@@ -2,15 +2,14 @@ package apis;
 
 import java.util.List;
 
-import models.ClothesModel;
+import models.Clothes;
+import models.SuccessResponse;
 import retrofit2.Call;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface APIService {
 
     @GET("product/get")
-    Call<List<ClothesModel>> getCategoryAll();
+    Call<List<Clothes>> getProduct();
 }

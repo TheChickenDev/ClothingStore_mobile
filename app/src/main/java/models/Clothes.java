@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class ClothesModel implements Serializable {
+public class Clothes implements Serializable {
     @SerializedName("_id")
     private String id;
     @SerializedName("sold")
@@ -18,7 +18,7 @@ public class ClothesModel implements Serializable {
     @SerializedName("img")
     private String img;
 
-    public ClothesModel(String id, String sold, String name, String desc, String price, String img) {
+    public Clothes(String id, String sold, String name, String desc, String price, String img) {
         this.id = id;
         this.sold = sold;
         this.name = name;

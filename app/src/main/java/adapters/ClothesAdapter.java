@@ -2,8 +2,6 @@ package adapters;
 
 import android.content.Context;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +12,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.clothingstore.HomeActivity;
 import com.example.clothingstore.R;
 
 import java.util.List;
 
-import models.ClothesModel;
+import models.Clothes;
+import models.SuccessResponse;
 
 public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHolder> {
     Context context;
-    List<ClothesModel> array;
-    public ClothesAdapter(Context context, List<ClothesModel> array) {
+    List<Clothes> array;
+    public ClothesAdapter(Context context, List<Clothes> array) {
         this.context = context;
         this.array = array;
     }
@@ -38,7 +36,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        ClothesModel clothesModel = array.get(position);
+        Clothes clothesModel = array.get(position);
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -71,7 +69,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHo
             super(itemView);
             images = (ImageView) itemView.findViewById(R.id.cate_image);
             nameSP = (TextView) itemView.findViewById(R.id.cate_name);
-            nameSP = (TextView) itemView.findViewById(R.id.cate_price);
+            priceSP = (TextView) itemView.findViewById(R.id.cate_price);
         }
     }
 }
