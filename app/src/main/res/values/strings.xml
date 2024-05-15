@@ -25,4 +25,12 @@
     <string name="list_new_arrivals">New Arrivals</string>
     <string name="item_name">Item name</string>
     <string name="item_price">Item price</string>
+
+    <string name="title_cart">Cart</string>
+    <string name="title_delete">Delete</string>
+    <string name="title_payment">Payment</string>
+    <string name="cart_name">Name</string>
+    <string name="cart_price">Price</string>
+    <string name="cart_size">Size</string>
+    <string name="cart_quantity">Quantity</string>
 </resources>
