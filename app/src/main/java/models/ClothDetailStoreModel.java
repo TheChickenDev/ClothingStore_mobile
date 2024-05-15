@@ -2,8 +2,7 @@ package models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ClothInfomationModel {
-
+public class ClothDetailStoreModel {
     @SerializedName("_id")
     private String id;
     private String img;
@@ -12,7 +11,7 @@ public class ClothInfomationModel {
     private String size;
     private int quantity;
 
-    public ClothInfomationModel(String id, String img, String name, double price, String size, int quantity) {
+    public ClothDetailStoreModel(String id, String img, String name, double price, String size, int quantity) {
         this.id = id;
         this.img = img;
         this.name = name;

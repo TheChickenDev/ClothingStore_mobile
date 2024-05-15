@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -19,16 +18,16 @@ import com.example.clothingstore.R;
 
 import java.util.List;
 
-import models.ClothInfomationModel;
+import models.ClothDetailStoreModel;
 import utils.DatabaseHelper;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> {
     Context context;
-    List<ClothInfomationModel> clothInfomationModelList;
+    List<ClothDetailStoreModel> clothDetailStoreModelList;
 
-    public CartAdapter(Context context, List<ClothInfomationModel> foodDetailStoreList) {
+    public CartAdapter(Context context, List<ClothDetailStoreModel> foodDetailStoreList) {
         this.context = context;
-        this.clothInfomationModelList = foodDetailStoreList;
+        this.clothDetailStoreModelList = foodDetailStoreList;
     }
 
     @NonNull
@@ -40,17 +39,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.MyViewHolder holder, int position) {
-        ClothInfomationModel clothInfomationModel = clothInfomationModelList.get(position);
-        holder.clothName.setText(clothInfomationModel.getName());
-        holder.clothPrice.setText(String.format("$%s", clothInfomationModel.getPrice()));
-        holder.clothSize.setText(String.format("$%s", clothInfomationModel.getSize()));
-        holder.clothQuantity.setText(String.valueOf(clothInfomationModel.getQuantity()));
-        Glide.with(context).load(clothInfomationModel.getImg()).into(holder.clothImage);
+        ClothDetailStoreModel clothing = clothDetailStoreModelList.get(position);
+        holder.clothName.setText(clothing.getName());
+        holder.clothPrice.setText(String.format("$%s", clothing.getPrice()));
+        holder.clothSize.setText(String.format("$%s", clothing.getSize()));
+        holder.clothQuantity.setText(String.valueOf(clothing.getQuantity()));
+        Glide.with(context).load(clothing.getImg()).into(holder.clothImage);
     }
 
     @Override
     public int getItemCount() {
-        return clothInfomationModelList.isEmpty()? 0 : clothInfomationModelList.size();
+        return clothDetailStoreModelList.isEmpty()? 0 : clothDetailStoreModelList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -64,6 +63,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
             clothPrice = itemView.findViewById(R.id.cart_item_price);
             clothSize = itemView.findViewById(R.id.cart_item_size);
             clothQuantity = itemView.findViewById(R.id.cart_item_quantity);
+            btnDelete = itemView.findViewById(R.id.btn_delete);
+            btnPayment = itemView.findViewById(R.id.btn_payment);
 
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -82,11 +83,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         }
     }
 
-    private void updateClothQuantityInDatabase(ClothInfomationModel cloth) {
+    private void updateFoodQuantityInDatabase(ClothDetailStoreModel food) {
         SQLiteDatabase db = new DatabaseHelper(context).getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("quantity", cloth.getQuantity());
-        db.update("Clothing Store", values, "_id = ?", new String[]{cloth.getId()});
+        values.put("quantity", food.getQuantity());
+        db.update("FoodStore", values, "id = ?", new String[]{food.getId()});
         db.close();
     }
 }
