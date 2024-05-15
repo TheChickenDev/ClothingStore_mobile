@@ -20,8 +20,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -47,6 +49,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     Users currentUser;
     ImageView updateAvatarImageView;
     MultipartBody.Part imagePart;
+    String imagePath;
     private ActivityResultLauncher<String> galleryLauncher;
 
     @Override
@@ -59,8 +62,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
         addressEdt = findViewById(R.id.et_address_value);
         updateAvatarImageView = findViewById(R.id.updateImageViewProfile);
         btnBack = findViewById(R.id.btn_back);
-        btnUpload = findViewById(R.id.btn_upload);
-
 
         // Lấy dữ liệu người dùng từ Intent
         Intent intent = getIntent();
@@ -77,8 +78,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             Glide.with(UpdateProfileActivity.this).load(currentUser.getAvatar()).into(updateAvatarImageView);
 //            displayUserData(currentUser);
         }
-
-        btnUpload.setOnClickListener(new View.OnClickListener() {
+        updateAvatarImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Gọi phương thức để mở Gallery
@@ -91,13 +91,16 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     @Override
                     public void onActivityResult(Uri result) {
                         if (result != null) {
-                            try {
-                                // Thực hiện xử lý ảnh đã chọn
-                                InputStream inputStream = getContentResolver().openInputStream(result);
-                                inputStream.close();
+                            // Lấy đường dẫn trực tiếp từ Uri
+                            imagePath = result.getPath();
+                            System.out.println(imagePath);
+                            if (imagePath != null) {
+                                File file = new File(imagePath);
+                                RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+                                imagePart = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
                                 Glide.with(UpdateProfileActivity.this).load(result).into(updateAvatarImageView);
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                            } else {
+                                System.out.println("Duong dan trong");
                             }
                         }
                     }
@@ -111,18 +114,19 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 // Lấy thông tin mới từ các EditText
                 Users updateUser = new Users();
                 updateUser.setid(userId);
-                System.out.println("--------------------------------------"+userId);
                 updateUser.setName(nameEdt.getText().toString());
                 updateUser.setPhone(phoneEdt.getText().toString());
                 updateUser.setEmail(emailTv.getText().toString());
                 updateUser.setAddress(addressEdt.getText().toString());
-                updateUser.setAvatar("");
-                System.out.println("-------------------------"+updateUser.getid() + updateUser.getName() + updateUser.getPhone() + updateUser.getEmail() + updateUser.getAddress());
+                updateUser.setAvatar(imagePath);
+                System.out.println("-------------------------"+updateUser.getid() + updateUser.getName() + updateUser.getPhone() + updateUser.getEmail() + updateUser.getAddress() + updateUser.getAvatar());
                 // Gọi phương thức cập nhật thông tin người dùng
+                System.out.println(imagePart);
 //                updateUserData(user);
+                Gson gson = new Gson();
                 ApiService apiService = ApiRetrofit.getRetrofitClient().create(ApiService.class);
                 // Gửi yêu cầu cập nhật thông tin người dùng lên API
-                apiService.updateUser(updateUser.getid(), updateUser, imagePart).enqueue(new Callback<SuccessResponse<Users>>() {
+                apiService.updateUser(updateUser.getid(), updateUser, imagePart ).enqueue(new Callback<SuccessResponse<Users>>() {
                     @Override
                     public void onResponse(@NonNull Call<SuccessResponse<Users>> call, @NonNull Response<SuccessResponse<Users>> response) {
                         System.out.println("------" + response.body());
@@ -151,6 +155,5 @@ public class UpdateProfileActivity extends AppCompatActivity {
             }
         });
     }
-
 
 }

@@ -6,8 +6,6 @@ import models.Users;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
@@ -20,7 +18,13 @@ public interface ApiService {
 
     @GET("product/get-by-id/{id}")
     Call<SuccessResponse<Product>> getProduct(@Path("id") String productId);
+//
+    @Multipart
     @PATCH("user/update/{id}")
-    Call<SuccessResponse<Users>> updateUser(@Path("id") String userId , @Body Users updateUser, MultipartBody.Part imagePart);
+    Call<SuccessResponse<Users>> updateUser(
+            @Path("id") String userId,
+            @Part("updateUser") Users updateUser, // Thông tin người dùng cần cập nhật
+            @Part MultipartBody.Part imagePart// Phần của ảnh
+    );
 
 }

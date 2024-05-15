@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Product implements Serializable {
@@ -20,6 +21,12 @@ public class Product implements Serializable {
     private String price;
     @SerializedName("img")
     private String img;
+
+    private ArrayList<String> sizes;
+
+
+
+
     private List<Thumbnail> thumbnail;
     private class Thumbnail{
         private String _id;
@@ -46,14 +53,16 @@ public class Product implements Serializable {
     }
 
 
-    public Product(String id, String sold, String name, String desc, String price, String img, Array thumbnail) {
+    public Product(String id, String sold, String name, String desc, String price, String img, Array thumbnail, ArrayList<String> sizes) {
         this.id = id;
         this.sold = sold;
         this.name = name;
         this.desc = desc;
         this.price = price;
         this.img = img;
+        this.sizes = sizes;
     }
+
 
     public String getId() {
         return id;
@@ -103,4 +112,11 @@ public class Product implements Serializable {
         this.img = img;
     }
 
+    public ArrayList<String> getSizes() {
+        return sizes;
+    }
+
+    public void setSizes(ArrayList<String> sizes) {
+        this.sizes = sizes;
+    }
 }

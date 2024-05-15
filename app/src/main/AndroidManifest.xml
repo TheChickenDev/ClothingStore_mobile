@@ -23,7 +23,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ProductCardActivity"
+            android:name=".ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".UpdateProfileActivity"
@@ -32,7 +32,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".ProductCardActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

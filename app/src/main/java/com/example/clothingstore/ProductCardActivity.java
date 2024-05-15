@@ -2,6 +2,8 @@ package com.example.clothingstore;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.text.Html;
@@ -17,6 +19,9 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.util.ArrayList;
+
+import adapters.SizeAdapter;
 import models.Product;
 import models.SuccessResponse;
 
@@ -34,6 +39,8 @@ public class ProductCardActivity extends AppCompatActivity {
     private Button btnExpandSheet, btnPlus, btnMinus;
     Product product;
     int nQuantity = 0;
+    private RecyclerView recyclerView;
+    private SizeAdapter adapter;
     String sPrice;
     private LinearLayout layoutBottomSheet;
     private BottomSheetBehavior bottomSheetBehavior;
@@ -104,6 +111,19 @@ public class ProductCardActivity extends AppCompatActivity {
                 btnPlus = viewDialog.findViewById(R.id.btn_plus);
                 btnMinus = viewDialog.findViewById(R.id.btn_minus);
 
+                ArrayList<String> sizes = product.getSizes();
+                System.out.println(sizes);
+                recyclerView = viewDialog.findViewById(R.id.recyclerView);
+                recyclerView.setLayoutManager(new LinearLayoutManager(ProductCardActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                adapter = new SizeAdapter(sizes, new SizeAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(String size) {
+                        // Xử lý sự kiện click cho từng size ở đây
+                        Toast.makeText(ProductCardActivity.this, "Selected size: " + size, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                recyclerView.setAdapter(adapter);
+
                 nQuantity = Integer.parseInt(tvQuantity.getText().toString());
 
                 tvPriceBottomSheet.setText(product.getPrice());
@@ -143,6 +163,7 @@ public class ProductCardActivity extends AppCompatActivity {
                 System.out.println( "So luong: "+nQuantity + "Gia: "+sPrice);
             }
         });
+
     }
 
 }

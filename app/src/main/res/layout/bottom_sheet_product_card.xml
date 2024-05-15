@@ -38,67 +38,11 @@
         android:layout_height="match_parent"
         android:text="Size" />
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_size_S"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            android:text="S"
-            android:textColor="#000000"
-            android:textSize="20dp"
-            app:cornerRadius="4dp"
-            app:strokeColor="#000000"
-            app:strokeWidth="1dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_size_M"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            android:text="M"
-            android:textColor="#000000"
-            android:textSize="20dp"
-            app:cornerRadius="4dp"
-            app:strokeColor="#000000"
-            app:strokeWidth="1dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_size_L"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            android:text="L"
-            android:textColor="#000000"
-            android:textSize="20dp"
-            app:cornerRadius="4dp"
-            app:strokeColor="#000000"
-            app:strokeWidth="1dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_size_XL"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            android:text="XL"
-            android:textColor="#000000"
-            android:textSize="20dp"
-            app:cornerRadius="4dp"
-            app:strokeColor="#000000"
-            app:strokeWidth="1dp" />
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:padding="8dp" />
 
     <TextView
         android:layout_width="match_parent"

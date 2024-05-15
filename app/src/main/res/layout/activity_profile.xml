@@ -17,16 +17,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_back"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:backgroundTint="#80B5B5"
-            app:icon="@drawable/baseline_arrow_back"
-            app:iconGravity="textStart"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:textColor="#FF0000"
             app:iconSize="36sp"
-            app:iconTint="#0C0C0C" />
+            app:icon="@drawable/baseline_arrow_back"
+            app:iconTint="#0C0C0C"
+            />
         <TextView
             android:id="@+id/textView"
             android:layout_width="0dp"
@@ -49,6 +50,7 @@
             app:iconTint="#0C0C0C"/>
 
     </LinearLayout>
+
 
 
     <de.hdodenhof.circleimageview.CircleImageView
