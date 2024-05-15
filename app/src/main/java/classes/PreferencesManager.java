@@ -32,7 +32,6 @@ public class PreferencesManager {
     }
     public boolean isUserLoggedOut() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
-<<<<<<< HEAD
         boolean isAccessTokenEmpty = sharedPreferences.getString("Access_token", "").isEmpty();
         boolean isRefreshTokenEmpty = sharedPreferences.getString("Refresh_token", "").isEmpty();
         boolean isEmailEmpty = sharedPreferences.getString("Email", "").isEmpty();
@@ -50,11 +49,5 @@ public class PreferencesManager {
         editor.remove("Password");
         editor.remove("Id");
         editor.apply();
-=======
-        boolean isEmailEmpty = sharedPreferences.getString("Email", "").isEmpty();
-        boolean isPasswordEmpty = sharedPreferences.getString("Password", "").isEmpty();
-        boolean isIdEmpty = sharedPreferences.getString("Id", "").isEmpty();
-        return isEmailEmpty || isPasswordEmpty || isIdEmpty;
->>>>>>> 7087403bfc9bb3554a30fb428e2064bd079c0c3a
     }
 }

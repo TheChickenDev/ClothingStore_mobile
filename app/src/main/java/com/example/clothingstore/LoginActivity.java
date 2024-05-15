@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(registerIntent);
             finish();
         });
-        Intent getPasswordIntent = new Intent(this, MainActivity.class);
+        Intent getPasswordIntent = new Intent(this, HomeActivity.class);
         btn_get_password.setOnClickListener(v -> {
             startActivity(getPasswordIntent);
             finish();
@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void Login(String email, String password) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         apiService = RetrofitClient.getRetrofit().create(APIService.class);
         apiService.login(email, password).enqueue(new Callback<SuccessResponseModel<AuthResponseModel>>() {
             @Override
