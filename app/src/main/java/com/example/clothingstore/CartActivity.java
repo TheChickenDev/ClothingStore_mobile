@@ -31,7 +31,7 @@ public class CartActivity extends BaseActivity {
 
         initializeBottomBar();
         int selectedMenuItemId = getIntent().getIntExtra("SELECTED_MENU_ITEM_ID", R.id.home);
-        bottomNavigationView.getMenu().findItem(selectedMenuItemId).setChecked(true);
+        btmNavigationView.getMenu().findItem(selectedMenuItemId).setChecked(true);
 
         MappingView();
         GetCartDetail();

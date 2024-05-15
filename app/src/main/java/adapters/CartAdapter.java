@@ -1,7 +1,9 @@
 package adapters;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.clothingstore.CartActivity;
+import com.example.clothingstore.HomeActivity;
 import com.example.clothingstore.R;
 
 import java.util.List;
@@ -56,6 +61,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         ImageView clothImage;
         TextView clothName, clothPrice, clothQuantity, clothSize;
         Button btnDelete, btnPayment;
+        AlertDialog.Builder builder;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             clothImage = itemView.findViewById(R.id.cart_item_image);

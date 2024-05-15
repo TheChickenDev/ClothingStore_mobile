@@ -13,7 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class BaseActivity extends AppCompatActivity {
-    public BottomNavigationView bottomNavigationView;
+    public BottomNavigationView btmNavigationView;
 
 
     @Override
@@ -32,13 +32,13 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void initializeBottomBar() {
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setClickable(true);
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+        btmNavigationView = findViewById(R.id.bottomNavigationView1);
+        btmNavigationView.setClickable(true);
+        btmNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if (id == bottomNavigationView.getSelectedItemId()) {
+                if (id == btmNavigationView.getSelectedItemId()) {
                     return true;
                 }
                 Log.d("Navbar", "onNavigationItemSelected: ID = " + id);
