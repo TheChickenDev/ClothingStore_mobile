@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.sql.Array;
+import java.util.List;
 
 public class Product implements Serializable {
     @SerializedName("_id")
@@ -19,9 +20,33 @@ public class Product implements Serializable {
     private String price;
     @SerializedName("img")
     private String img;
+    private List<Thumbnail> thumbnail;
+    private class Thumbnail{
+        private String _id;
+        private String url;
+        private String path;
+
+        public Thumbnail(String _id, String url, String path) {
+            this._id = _id;
+            this.url = url;
+            this.path = path;
+        }
+
+        public String get_id() {
+            return _id;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public String getPath() {
+            return path;
+        }
+    }
 
 
-    public Product(String id, String sold, String name, String desc, String price, String img) {
+    public Product(String id, String sold, String name, String desc, String price, String img, Array thumbnail) {
         this.id = id;
         this.sold = sold;
         this.name = name;

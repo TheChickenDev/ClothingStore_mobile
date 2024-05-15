@@ -5,11 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.Html;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import models.Product;
 import models.SuccessResponse;
@@ -24,7 +30,14 @@ import retrofit2.Response;
 public class ProductCardActivity extends AppCompatActivity {
 
     ImageView imageProduct;
-    TextView tvSold , tvNameProduct, tvPrice, tvDescription;
+    TextView tvSold , tvNameProduct, tvPrice, tvDescription, tvPriceBottomSheet, tvQuantity;
+    private Button btnExpandSheet, btnPlus, btnMinus;
+    Product product;
+    int nQuantity = 0;
+    String sPrice;
+    private LinearLayout layoutBottomSheet;
+    private BottomSheetBehavior bottomSheetBehavior;
+
 
     public static String removeHtmlTags(String htmlDescription) {
         // Sử dụng Html.fromHtml() với mode legacy để loại bỏ các thẻ HTML
@@ -40,6 +53,9 @@ public class ProductCardActivity extends AppCompatActivity {
         tvNameProduct = findViewById(R.id.tv_nameProduct);
         tvPrice = findViewById(R.id.tv_price);
         tvDescription = findViewById(R.id.tv_description);
+        btnExpandSheet = findViewById(R.id.btn_Add_Cart);
+
+
 
         String productId = "66116fe4f1bf7f8c4986bd5a";
         ApiService apiService = ApiRetrofit.getRetrofitClient().create(ApiService.class);
@@ -48,7 +64,7 @@ public class ProductCardActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<SuccessResponse<Product>> call, @NonNull Response<SuccessResponse<Product>> response) {
                 if (response.isSuccessful()) {
                     SuccessResponse<Product> successResponse = response.body();
-                    Product product;
+
                     if (successResponse !=null){
                         product = successResponse.getData();
                         tvSold.setText(product.getSold());
@@ -59,6 +75,8 @@ public class ProductCardActivity extends AppCompatActivity {
                         tvDescription.setText(processDes);
                         // Hien avatar ra imageView
                         Glide.with(ProductCardActivity.this).load(product.getImg()).into(imageProduct);
+
+
 
                     } else {
                         Toast.makeText(ProductCardActivity.this, "User not found!", Toast.LENGTH_SHORT).show();
@@ -77,6 +95,54 @@ public class ProductCardActivity extends AppCompatActivity {
 
 
         });
+        btnExpandSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View viewDialog = getLayoutInflater().inflate(R.layout.bottom_sheet_product_card, null);
+                tvPriceBottomSheet = viewDialog.findViewById(R.id.tv_price_bottomSheet);
+                tvQuantity = viewDialog.findViewById(R.id.tv_quantity);
+                btnPlus = viewDialog.findViewById(R.id.btn_plus);
+                btnMinus = viewDialog.findViewById(R.id.btn_minus);
 
+                nQuantity = Integer.parseInt(tvQuantity.getText().toString());
+
+                tvPriceBottomSheet.setText(product.getPrice());
+                btnPlus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        nQuantity = nQuantity + 1;
+                        tvQuantity.setText(String.valueOf(nQuantity));
+                        String sPrice = String.valueOf(Integer.parseInt(product.getPrice()) * nQuantity);
+                        tvPriceBottomSheet.setText(sPrice);
+                        abdc(nQuantity, sPrice);
+                    }
+                });
+
+                btnMinus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        nQuantity = nQuantity - 1;
+                        tvQuantity.setText(String.valueOf(nQuantity));
+                        String sPrice = String.valueOf(Integer.parseInt(product.getPrice()) * nQuantity);
+                        tvPriceBottomSheet.setText(sPrice);
+                        abdc(nQuantity, sPrice);
+                    }
+                });
+
+
+
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(ProductCardActivity.this);
+                bottomSheetDialog.setContentView(viewDialog);
+                bottomSheetDialog.show();
+            }
+
+
+
+            public void abdc(int nQuantity,String sPrice){
+                System.out.println("-----------------"+product.getId());
+                System.out.println( "So luong: "+nQuantity + "Gia: "+sPrice);
+            }
+        });
     }
+
 }
