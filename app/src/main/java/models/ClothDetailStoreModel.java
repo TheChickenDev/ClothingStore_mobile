@@ -11,6 +11,10 @@ public class ClothDetailStoreModel {
     private String size;
     private int quantity;
 
+    public ClothDetailStoreModel() {
+
+    }
+
     public ClothDetailStoreModel(String id, String img, String name, double price, String size, int quantity) {
         this.id = id;
         this.img = img;
