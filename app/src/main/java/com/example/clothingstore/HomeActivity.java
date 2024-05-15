@@ -24,7 +24,7 @@ import retrofit2.Response;
 import utils.RetrofitClient;
 
 public class HomeActivity extends AppCompatActivity {
-    RecyclerView rcClothesBestSeller;
+    RecyclerView rcClothesBestSeller, rcClothesNewArrivals;
     ClothesAdapter clothesAdapter;
     APIService apiService;
     List<ClothModel> clothesList;
@@ -34,6 +34,9 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         AnhXaBestSeller();
         GetClothesBestSeller();
+
+        AnhXaNewArrivals();
+        GetClothesNewArrivals();
     }
     private void AnhXaBestSeller() {
         rcClothesBestSeller = (RecyclerView) findViewById(R.id.rvBestSeller);
@@ -53,6 +56,39 @@ public class HomeActivity extends AppCompatActivity {
                             LinearLayoutManager.HORIZONTAL, false);
                     rcClothesBestSeller.setLayoutManager(layoutManagerBestSeller);
                     rcClothesBestSeller.setAdapter(clothesAdapter);
+                    clothesAdapter.notifyDataSetChanged();
+                } else {
+                    int statusCode = response.code();
+                    System.out.println("Mã lỗi: " + statusCode);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Throwable t) {
+                String message = t.getMessage() != null ? t.getMessage() : "Lỗi rồi";
+                Toast.makeText(HomeActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void AnhXaNewArrivals() {
+        rcClothesNewArrivals = (RecyclerView) findViewById(R.id.rvNewArrivals);
+    }
+    private void GetClothesNewArrivals() {
+        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService.getProduct().enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Response<SuccessResponseModel<GetProductResponseModel>> response) {
+                if (response.isSuccessful()) {
+                    SuccessResponseModel<GetProductResponseModel> successResponse = response.body();
+                    clothesList = successResponse.getData().getProducts();
+                    clothesAdapter = new ClothesAdapter(HomeActivity.this, clothesList);
+                    rcClothesNewArrivals.setHasFixedSize(true);
+                    LinearLayoutManager layoutManagerNewArrivals = new LinearLayoutManager(getApplicationContext(),
+                            LinearLayoutManager.HORIZONTAL, false);
+                    rcClothesNewArrivals.setLayoutManager(layoutManagerNewArrivals);
+                    rcClothesNewArrivals.setAdapter(clothesAdapter);
                     clothesAdapter.notifyDataSetChanged();
                 } else {
                     int statusCode = response.code();
