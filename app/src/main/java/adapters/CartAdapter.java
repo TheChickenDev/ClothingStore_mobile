@@ -20,6 +20,7 @@ import com.example.clothingstore.R;
 import java.util.List;
 
 import models.ClothInfomationModel;
+import utils.DatabaseHelper;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> {
     Context context;
@@ -81,11 +82,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         }
     }
 
-//    private void updateClothQuantityInDatabase(ClothInfomationModel cloth) {
-//        SQLiteDatabase db = new DatabaseHelper(context).getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put("quantity", cloth.getQuantity());
-//        db.update("Clothing Store", values, "_id = ?", new String[]{cloth.getId()});
-//        db.close();
-//    }
+    private void updateClothQuantityInDatabase(ClothInfomationModel cloth) {
+        SQLiteDatabase db = new DatabaseHelper(context).getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("quantity", cloth.getQuantity());
+        db.update("Clothing Store", values, "_id = ?", new String[]{cloth.getId()});
+        db.close();
+    }
 }
