@@ -3,6 +3,7 @@ package com.example.clothingstore;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,42 +15,44 @@ import java.util.List;
 
 import adapters.ClothesAdapter;
 import apis.APIService;
-import models.Clothes;
-import models.SuccessResponse;
+import models.ClothModel;
+import models.GetProductResponseModel;
+import models.SuccessResponseModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import utils.RetrofitClient;
 
 public class HomeActivity extends AppCompatActivity {
-    RecyclerView rcClothes;
+    RecyclerView rcClothesBestSeller;
     ClothesAdapter clothesAdapter;
     APIService apiService;
-    List<Clothes> clothesList;
+    List<ClothModel> clothesList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        AnhXa();
-        GetCategory();
+        AnhXaBestSeller();
+        GetClothesBestSeller();
     }
-    private void AnhXa() {
-        rcClothes = (RecyclerView) findViewById(R.id.rvBestSeller);
+    private void AnhXaBestSeller() {
+        rcClothesBestSeller = (RecyclerView) findViewById(R.id.rvBestSeller);
     }
-    private void GetCategory() {
+    private void GetClothesBestSeller() {
         apiService = RetrofitClient.getRetrofit().create(APIService.class);
-        apiService.getProduct().enqueue(new Callback<List<Clothes>>() {
+        apiService.getProduct().enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
-            public void onResponse(@NonNull Call<List<Clothes>> call, @NonNull Response<List<Clothes>> response) {
+            public void onResponse(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Response<SuccessResponseModel<GetProductResponseModel>> response) {
                 if (response.isSuccessful()) {
-                    clothesList = response.body();
+                    SuccessResponseModel<GetProductResponseModel> successResponse = response.body();
+                    clothesList = successResponse.getData().getProducts();
                     clothesAdapter = new ClothesAdapter(HomeActivity.this, clothesList);
-                    rcClothes.setHasFixedSize(true);
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
+                    rcClothesBestSeller.setHasFixedSize(true);
+                    LinearLayoutManager layoutManagerBestSeller = new LinearLayoutManager(getApplicationContext(),
                             LinearLayoutManager.HORIZONTAL, false);
-                    rcClothes.setLayoutManager(layoutManager);
-                    rcClothes.setAdapter(clothesAdapter);
+                    rcClothesBestSeller.setLayoutManager(layoutManagerBestSeller);
+                    rcClothesBestSeller.setAdapter(clothesAdapter);
                     clothesAdapter.notifyDataSetChanged();
                 } else {
                     int statusCode = response.code();
@@ -58,9 +61,9 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Clothes>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Throwable t) {
                 String message = t.getMessage() != null ? t.getMessage() : "Lỗi rồi";
-                Log.d("log", message);
+                Toast.makeText(HomeActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
     }

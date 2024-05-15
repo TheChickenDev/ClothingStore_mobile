@@ -1,13 +1,13 @@
 package models;
 
-public class SuccessResponse <T> {
-    private String status;
-    private String massage;
-    private T data;
+public class SuccessResponseModel<T> {
+    String status;
+    String message;
+    T data;
 
-    public SuccessResponse(String status, String massage, T data) {
+    public SuccessResponseModel(String status, String message, T data) {
         this.status = status;
-        this.massage = massage;
+        this.message = message;
         this.data = data;
     }
 
@@ -19,12 +19,12 @@ public class SuccessResponse <T> {
         this.status = status;
     }
 
-    public String getMassage() {
-        return massage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMassage(String massage) {
-        this.massage = massage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public T getData() {

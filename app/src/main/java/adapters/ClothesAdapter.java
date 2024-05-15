@@ -2,6 +2,7 @@ package adapters;
 
 import android.content.Context;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +17,12 @@ import com.example.clothingstore.R;
 
 import java.util.List;
 
-import models.Clothes;
-import models.SuccessResponse;
+import models.ClothModel;
 
 public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHolder> {
     Context context;
-    List<Clothes> array;
-    public ClothesAdapter(Context context, List<Clothes> array) {
+    List<ClothModel> array;
+    public ClothesAdapter(Context context, List<ClothModel> array) {
         this.context = context;
         this.array = array;
     }
@@ -36,7 +36,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Clothes clothesModel = array.get(position);
+        ClothModel clothes = array.get(position);
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -50,10 +50,10 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHo
 //                v.getContext().startActivity(intent);
 //            }
 //        });
-        holder.nameSP.setText(clothesModel.getName());
-        holder.priceSP.setText(clothesModel.getPrice());
+        holder.nameSP.setText(clothes.getName());
+        holder.priceSP.setText(clothes.getPrice());
         Glide.with(context)
-                .load(clothesModel.getImg())
+                .load(clothes.getImg())
                 .into(holder.images);
     }
 
@@ -69,6 +69,8 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHo
             super(itemView);
             images = (ImageView) itemView.findViewById(R.id.cate_image);
             nameSP = (TextView) itemView.findViewById(R.id.cate_name);
+            nameSP.setEllipsize(TextUtils.TruncateAt.END);
+            nameSP.setMaxLines(1);
             priceSP = (TextView) itemView.findViewById(R.id.cate_price);
         }
     }
