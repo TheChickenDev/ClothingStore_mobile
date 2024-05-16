@@ -15,4 +15,14 @@
     </style>
 
     <style name="Theme.ClothingStore" parent="Base.Theme.ClothingStore" />
+    <style name="Theme.App" parent="Theme.Material3.Light">
+        <item name="circularProgressIndicatorStyle">@style/Widget.App.CircularProgressIndicator</item>
+    </style>
+    <style name="Widget.App.CircularProgressIndicator" parent="Widget.Material3.CircularProgressIndicator.Legacy">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.CircularProgressIndicator</item>
+        <item name="trackThickness">20dp</item>
+    </style>
+    <style name="ThemeOverlay.App.CircularProgressIndicator" parent="">
+        <item name="colorPrimary">@color/yellow_primary</item>
+    </style>
 </resources>
