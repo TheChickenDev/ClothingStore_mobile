@@ -59,7 +59,7 @@ public class HomeActivity extends AppCompatActivity {
                     clothesAdapter.notifyDataSetChanged();
                 } else {
                     int statusCode = response.code();
-                    System.out.println("Mã lỗi: " + statusCode);
+                    Toast.makeText(HomeActivity.this, "Lỗi rồi kìa! Mã lỗi: " + statusCode, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -92,7 +92,7 @@ public class HomeActivity extends AppCompatActivity {
                     clothesAdapter.notifyDataSetChanged();
                 } else {
                     int statusCode = response.code();
-                    System.out.println("Mã lỗi: " + statusCode);
+                    Toast.makeText(HomeActivity.this, "Lỗi rồi kìa! Mã lỗi: " + statusCode, Toast.LENGTH_SHORT).show();
                 }
             }
 

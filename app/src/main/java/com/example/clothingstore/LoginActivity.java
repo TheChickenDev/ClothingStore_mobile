@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                             String refresh_token = successResponse.getData().getRefresh_token();
                             String id = user.getId();
                             preferencesManager.saveLoginDetails(access_token, refresh_token, email, password, id);
-                            System.out.println("-----" + successResponse.getMessage());
+                            Toast.makeText(LoginActivity.this, successResponse.getMessage(), Toast.LENGTH_SHORT).show();
                             startActivity(intent);
                             finish();
                         } else {
