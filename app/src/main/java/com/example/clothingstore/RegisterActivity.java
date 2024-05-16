@@ -140,8 +140,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String confirm_password = s.toString();
                 String password = Objects.requireNonNull(input_password.getText()).toString();
-                System.out.println("-----" + password + "-----" + confirm_password + "-----" + validate.validateConfirmPassword(password, confirm_password));
-                if (validate.validateConfirmPassword(password, confirm_password)) {
+                if (!validate.validateConfirmPassword(password, confirm_password)) {
                     layout_confirm_password.setError("Invalid re-enter password");
                 } else {
                     layout_confirm_password.setError(null);
@@ -206,7 +205,6 @@ public class RegisterActivity extends AppCompatActivity {
                 String address = Objects.requireNonNull(input_address.getText()).toString();
                 String phone = Objects.requireNonNull(input_phone.getText()).toString();
                 boolean isValidForm = true;
-                System.out.println("-----" + password + "-----" + confirm_password + "-----" + validate.validateConfirmPassword(password, confirm_password));
                 if (!validate.validateName(name)) {
                     layout_name.setError("Invalid name");
                     isValidForm = false;

@@ -7,6 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 
 public interface APIService {
@@ -20,4 +21,12 @@ public interface APIService {
 
     @GET("product/get")
     Call<SuccessResponseModel<GetProductResponseModel>> getProduct();
+
+    @FormUrlEncoded
+    @POST("user/forgot-password")
+    Call<SuccessResponseModel<String>> getOTP(@Field("email") String email);
+
+    @FormUrlEncoded
+    @PATCH("user/reset-password")
+    Call<SuccessResponseModel<String>> resetPassword(@Field("key") String key, @Field("token") String token, @Field("password") String password, @Field("confirm_password") String confirm_password);
 }

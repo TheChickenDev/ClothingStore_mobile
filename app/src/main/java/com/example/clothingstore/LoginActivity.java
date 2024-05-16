@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(registerIntent);
             finish();
         });
-        Intent getPasswordIntent = new Intent(this, HomeActivity.class);
+        Intent getPasswordIntent = new Intent(this, ForgotPasswordActivity.class);
         btn_get_password.setOnClickListener(v -> {
             startActivity(getPasswordIntent);
             finish();
