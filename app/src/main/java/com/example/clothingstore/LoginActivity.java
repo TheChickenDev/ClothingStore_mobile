@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                             String id = user.getId();
                             preferencesManager.saveLoginDetails(access_token, refresh_token, email, password, id);
                             System.out.println("-----" + successResponse.getMessage());
-                            startActivity(intent);
+//                            startActivity(intent);
                             finish();
                         } else {
                             Toast.makeText(LoginActivity.this, successResponse.getMessage(), Toast.LENGTH_SHORT).show();
