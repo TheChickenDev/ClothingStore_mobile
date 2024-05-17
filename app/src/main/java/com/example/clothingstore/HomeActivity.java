@@ -24,7 +24,7 @@ import retrofit2.Response;
 import utils.RetrofitClient;
 
 public class HomeActivity extends AppCompatActivity {
-    RecyclerView rcClothesBestSeller, rcClothesNewArrivals;
+    RecyclerView rcClothesMale, rcClothesFemale, rcClothesUnisex, rcClothesJacket, rcClothesAccessory;
     ClothesAdapter clothesAdapter;
     APIService apiService;
     List<ClothModel> clothesList;
@@ -32,18 +32,27 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        AnhXaBestSeller();
-        GetClothesBestSeller();
+        AnhXaMale();
+        GetClothesMale();
 
-        AnhXaNewArrivals();
-        GetClothesNewArrivals();
+        AnhXaFemale();
+        GetClothesFemale();
+
+        AnhXaUnisex();
+        GetClothesUnisex();
+
+        AnhXaJacket();
+        GetClothesJacket();
+
+        AnhXaAccessory();
+        GetClothesAccessory();
     }
-    private void AnhXaBestSeller() {
-        rcClothesBestSeller = (RecyclerView) findViewById(R.id.rvBestSeller);
+    private void AnhXaMale() {
+        rcClothesMale = (RecyclerView) findViewById(R.id.rvMale);
     }
-    private void GetClothesBestSeller() {
+    private void GetClothesMale() {
         apiService = RetrofitClient.getRetrofit().create(APIService.class);
-        apiService.getProduct().enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
+        apiService.getProductMale().enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Response<SuccessResponseModel<GetProductResponseModel>> response) {
@@ -51,11 +60,11 @@ public class HomeActivity extends AppCompatActivity {
                     SuccessResponseModel<GetProductResponseModel> successResponse = response.body();
                     clothesList = successResponse.getData().getProducts();
                     clothesAdapter = new ClothesAdapter(HomeActivity.this, clothesList);
-                    rcClothesBestSeller.setHasFixedSize(true);
+                    rcClothesMale.setHasFixedSize(true);
                     LinearLayoutManager layoutManagerBestSeller = new LinearLayoutManager(getApplicationContext(),
                             LinearLayoutManager.HORIZONTAL, false);
-                    rcClothesBestSeller.setLayoutManager(layoutManagerBestSeller);
-                    rcClothesBestSeller.setAdapter(clothesAdapter);
+                    rcClothesMale.setLayoutManager(layoutManagerBestSeller);
+                    rcClothesMale.setAdapter(clothesAdapter);
                     clothesAdapter.notifyDataSetChanged();
                 } else {
                     int statusCode = response.code();
@@ -71,12 +80,12 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void AnhXaNewArrivals() {
-        rcClothesNewArrivals = (RecyclerView) findViewById(R.id.rvNewArrivals);
+    private void AnhXaFemale() {
+        rcClothesFemale = (RecyclerView) findViewById(R.id.rvFemale);
     }
-    private void GetClothesNewArrivals() {
+    private void GetClothesFemale() {
         apiService = RetrofitClient.getRetrofit().create(APIService.class);
-        apiService.getProduct().enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
+        apiService.getProductFemale().enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Response<SuccessResponseModel<GetProductResponseModel>> response) {
@@ -84,11 +93,110 @@ public class HomeActivity extends AppCompatActivity {
                     SuccessResponseModel<GetProductResponseModel> successResponse = response.body();
                     clothesList = successResponse.getData().getProducts();
                     clothesAdapter = new ClothesAdapter(HomeActivity.this, clothesList);
-                    rcClothesNewArrivals.setHasFixedSize(true);
+                    rcClothesFemale.setHasFixedSize(true);
                     LinearLayoutManager layoutManagerNewArrivals = new LinearLayoutManager(getApplicationContext(),
                             LinearLayoutManager.HORIZONTAL, false);
-                    rcClothesNewArrivals.setLayoutManager(layoutManagerNewArrivals);
-                    rcClothesNewArrivals.setAdapter(clothesAdapter);
+                    rcClothesFemale.setLayoutManager(layoutManagerNewArrivals);
+                    rcClothesFemale.setAdapter(clothesAdapter);
+                    clothesAdapter.notifyDataSetChanged();
+                } else {
+                    int statusCode = response.code();
+                    System.out.println("Mã lỗi: " + statusCode);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Throwable t) {
+                String message = t.getMessage() != null ? t.getMessage() : "Lỗi rồi";
+                Toast.makeText(HomeActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void AnhXaUnisex() {
+        rcClothesUnisex = (RecyclerView) findViewById(R.id.rvUnisex);
+    }
+    private void GetClothesUnisex() {
+        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService.getProductUnisex().enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Response<SuccessResponseModel<GetProductResponseModel>> response) {
+                if (response.isSuccessful()) {
+                    SuccessResponseModel<GetProductResponseModel> successResponse = response.body();
+                    clothesList = successResponse.getData().getProducts();
+                    clothesAdapter = new ClothesAdapter(HomeActivity.this, clothesList);
+                    rcClothesUnisex.setHasFixedSize(true);
+                    LinearLayoutManager layoutManagerNewArrivals = new LinearLayoutManager(getApplicationContext(),
+                            LinearLayoutManager.HORIZONTAL, false);
+                    rcClothesUnisex.setLayoutManager(layoutManagerNewArrivals);
+                    rcClothesUnisex.setAdapter(clothesAdapter);
+                    clothesAdapter.notifyDataSetChanged();
+                } else {
+                    int statusCode = response.code();
+                    System.out.println("Mã lỗi: " + statusCode);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Throwable t) {
+                String message = t.getMessage() != null ? t.getMessage() : "Lỗi rồi";
+                Toast.makeText(HomeActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void AnhXaJacket() {
+        rcClothesJacket= (RecyclerView) findViewById(R.id.rvJacket);
+    }
+    private void GetClothesJacket() {
+        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService.getProductJacket().enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Response<SuccessResponseModel<GetProductResponseModel>> response) {
+                if (response.isSuccessful()) {
+                    SuccessResponseModel<GetProductResponseModel> successResponse = response.body();
+                    clothesList = successResponse.getData().getProducts();
+                    clothesAdapter = new ClothesAdapter(HomeActivity.this, clothesList);
+                    rcClothesJacket.setHasFixedSize(true);
+                    LinearLayoutManager layoutManagerNewArrivals = new LinearLayoutManager(getApplicationContext(),
+                            LinearLayoutManager.HORIZONTAL, false);
+                    rcClothesJacket.setLayoutManager(layoutManagerNewArrivals);
+                    rcClothesJacket.setAdapter(clothesAdapter);
+                    clothesAdapter.notifyDataSetChanged();
+                } else {
+                    int statusCode = response.code();
+                    System.out.println("Mã lỗi: " + statusCode);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Throwable t) {
+                String message = t.getMessage() != null ? t.getMessage() : "Lỗi rồi";
+                Toast.makeText(HomeActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void AnhXaAccessory() {
+        rcClothesAccessory= (RecyclerView) findViewById(R.id.rvAccessory);
+    }
+    private void GetClothesAccessory() {
+        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService.getProductAccessory().enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Response<SuccessResponseModel<GetProductResponseModel>> response) {
+                if (response.isSuccessful()) {
+                    SuccessResponseModel<GetProductResponseModel> successResponse = response.body();
+                    clothesList = successResponse.getData().getProducts();
+                    clothesAdapter = new ClothesAdapter(HomeActivity.this, clothesList);
+                    rcClothesAccessory.setHasFixedSize(true);
+                    LinearLayoutManager layoutManagerNewArrivals = new LinearLayoutManager(getApplicationContext(),
+                            LinearLayoutManager.HORIZONTAL, false);
+                    rcClothesAccessory.setLayoutManager(layoutManagerNewArrivals);
+                    rcClothesAccessory.setAdapter(clothesAdapter);
                     clothesAdapter.notifyDataSetChanged();
                 } else {
                     int statusCode = response.code();

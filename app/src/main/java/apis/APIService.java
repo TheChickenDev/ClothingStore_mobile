@@ -18,6 +18,18 @@ public interface APIService {
     @POST("user/register")
     Call<SuccessResponseModel<AuthResponseModel>> register(@Field("name") String name, @Field("email") String email, @Field("password") String password, @Field("confirm_password") String confirm_password, @Field("address") String address, @Field("phone") String phone);
 
-    @GET("product/get")
-    Call<SuccessResponseModel<GetProductResponseModel>> getProduct();
+    @GET("product/get?type=male")
+    Call<SuccessResponseModel<GetProductResponseModel>> getProductMale();
+
+    @GET("product/get?type=female")
+    Call<SuccessResponseModel<GetProductResponseModel>> getProductFemale();
+
+    @GET("product/get?type=unisex")
+    Call<SuccessResponseModel<GetProductResponseModel>> getProductUnisex();
+
+    @GET("product/get?type=jacket")
+    Call<SuccessResponseModel<GetProductResponseModel>> getProductJacket();
+
+    @GET("product/get?type=accessory")
+    Call<SuccessResponseModel<GetProductResponseModel>> getProductAccessory();
 }

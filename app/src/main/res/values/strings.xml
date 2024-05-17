@@ -23,8 +23,12 @@
     <string name="activity_register_login_btn"><u>Sign in</u></string>
     <string name="activity_register_register_btn"><u>Sign up</u></string>
 
-    <string name="list_best_seller">Best Seller</string>
-    <string name="list_new_arrivals">New Arrivals</string>
+    <string name="list_male">Male</string>
+    <string name="list_female">Female</string>
+    <string name="list_unisex">Unisex</string>
+    <string name="list_jacket">Jacket</string>
+    <string name="list_accessory">Accessory</string>
+
     <string name="item_name">Item name</string>
     <string name="item_price">Item price</string>
 
