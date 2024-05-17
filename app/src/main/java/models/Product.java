@@ -1,9 +1,7 @@
 package models;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,22 +11,42 @@ public class Product implements Serializable {
 
     @SerializedName("sold")
     private String sold;
+
     @SerializedName("name")
     private String name;
+
     @SerializedName("desc")
     private String desc;
+
     @SerializedName("price")
     private String price;
+
     @SerializedName("img")
     private String img;
 
+    @SerializedName("size")
     private ArrayList<String> sizes;
 
+    @SerializedName("thumbnail")
+    private List<Thumbnail> thumbnails;
 
+    public List<Thumbnail> getThumbnails() {
+        return thumbnails;
+    }
 
+    public void rearrangeThumbnails() {
+        if (thumbnails.size() >= 2) {
+            Thumbnail mainThumbnail = new Thumbnail();
+            mainThumbnail.set_id("0");
+            mainThumbnail.setUrl(getImg());
 
-    private List<Thumbnail> thumbnail;
-    private class Thumbnail{
+            Thumbnail secondThumbnail = thumbnails.get(0);
+            thumbnails.set(0, mainThumbnail);
+            thumbnails.add(1, secondThumbnail);
+        }
+    }
+
+    public static class Thumbnail {
         private String _id;
         private String url;
         private String path;
@@ -37,6 +55,9 @@ public class Product implements Serializable {
             this._id = _id;
             this.url = url;
             this.path = path;
+        }
+
+        public Thumbnail() {
         }
 
         public String get_id() {
@@ -50,19 +71,26 @@ public class Product implements Serializable {
         public String getPath() {
             return path;
         }
+
+        public void set_id(String _id) {
+            this._id = _id;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
     }
 
-
-    public Product(String id, String sold, String name, String desc, String price, String img, Array thumbnail, ArrayList<String> sizes) {
+    public Product(String id, String sold, String name, String desc, String price, String img, List<Thumbnail> thumbnails, ArrayList<String> sizes) {
         this.id = id;
         this.sold = sold;
         this.name = name;
         this.desc = desc;
         this.price = price;
         this.img = img;
+        this.thumbnails = thumbnails;
         this.sizes = sizes;
     }
-
 
     public String getId() {
         return id;
@@ -120,3 +148,4 @@ public class Product implements Serializable {
         this.sizes = sizes;
     }
 }
+

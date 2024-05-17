@@ -1,5 +1,6 @@
 package adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ public class SizeAdapter extends RecyclerView.Adapter<SizeAdapter.SizeViewHolder
 
     private String[] sizes;
     private OnItemClickListener listener;
+    private static int lastSelectedItemPosition = -1;
+    private static String lastSelectedItem = null;
 
     public interface OnItemClickListener {
         void onItemClick(String size);
@@ -36,7 +39,7 @@ public class SizeAdapter extends RecyclerView.Adapter<SizeAdapter.SizeViewHolder
     @Override
     public void onBindViewHolder(@NonNull SizeViewHolder holder, int position) {
         String size = sizes[position];
-        holder.bind(size, listener);
+        holder.bind(size, listener, position);
     }
 
     @Override
@@ -44,24 +47,33 @@ public class SizeAdapter extends RecyclerView.Adapter<SizeAdapter.SizeViewHolder
         return sizes.length;
     }
 
-    static class SizeViewHolder extends RecyclerView.ViewHolder {
+    class SizeViewHolder extends RecyclerView.ViewHolder {
         private Button btnSize;
 
         public SizeViewHolder(@NonNull View itemView) {
             super(itemView);
-            btnSize = itemView.findViewById(R.id.btn_Size);
+            btnSize = itemView.findViewById(R.id.btn_List);
         }
 
-        public void bind(final String size, final OnItemClickListener listener) {
+        public void bind(final String size, final OnItemClickListener listener, int position) {
             btnSize.setText(size);
+            if (position == lastSelectedItemPosition) {
+                btnSize.setBackgroundColor(Color.parseColor("#D3D3D3")); // Đặt màu nền cho button được chọn
+            } else {
+                btnSize.setBackgroundColor(Color.parseColor("#FFFFFF")); // Đặt màu nền mặc định cho các button khác
+            }
             btnSize.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    lastSelectedItem = size;
+                    lastSelectedItemPosition = getAdapterPosition();
                     if (listener != null) {
                         listener.onItemClick(size);
                     }
+                    notifyDataSetChanged(); // Cập nhật lại giao diện sau khi thay đổi vị trí được chọn
                 }
             });
         }
     }
 }
+

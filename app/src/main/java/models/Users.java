@@ -1,7 +1,6 @@
 package models;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
-import java.lang.annotation.Annotation;
 
 public class Users implements Serializable {
     @SerializedName("_id")
@@ -34,8 +33,9 @@ public class Users implements Serializable {
         return id;
     }
 
-    public void setid(String id) {
+    public String setid(String id) {
         this.id = id;
+        return id;
     }
 
     public String getName() {

@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -20,7 +22,10 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import adapters.ImageAdapter;
 import adapters.SizeAdapter;
 import models.Product;
 import models.SuccessResponse;
@@ -36,12 +41,13 @@ public class ProductCardActivity extends AppCompatActivity {
 
     ImageView imageProduct;
     TextView tvSold , tvNameProduct, tvPrice, tvDescription, tvPriceBottomSheet, tvQuantity;
-    private Button btnExpandSheet, btnPlus, btnMinus;
+    private Button btnExpandSheet, btnPlus, btnMinus, btnConfirm;
     Product product;
-    int nQuantity = 0;
-    private RecyclerView recyclerView;
+    int nQuantity = 1;
+    private RecyclerView recyclerView, imbRecycleView;
     private SizeAdapter adapter;
-    String sPrice;
+    private ImageAdapter imageAdapter;
+    String sQuantity, sPrice, isize;
     private LinearLayout layoutBottomSheet;
     private BottomSheetBehavior bottomSheetBehavior;
 
@@ -64,6 +70,7 @@ public class ProductCardActivity extends AppCompatActivity {
 
 
 
+
         String productId = "66116fe4f1bf7f8c4986bd5a";
         ApiService apiService = ApiRetrofit.getRetrofitClient().create(ApiService.class);
         apiService.getProduct(productId).enqueue(new Callback<SuccessResponse<Product>>() {
@@ -83,7 +90,31 @@ public class ProductCardActivity extends AppCompatActivity {
                         // Hien avatar ra imageView
                         Glide.with(ProductCardActivity.this).load(product.getImg()).into(imageProduct);
 
+                        ArrayList<String> thumbnailUrls = new ArrayList<>();
+                        List<Product.Thumbnail> thumbnails = product.getThumbnails();
+                        for (Product.Thumbnail thumbnail : thumbnails) {
+                            thumbnailUrls.add(thumbnail.getUrl());
+                        }
 
+                        System.out.println("-------------------"+thumbnailUrls);
+                        if (!thumbnailUrls.isEmpty()) {
+                            // Tiếp tục xử lý
+                            imbRecycleView = findViewById(R.id.imagebutton_recycleview);
+                            imbRecycleView.setLayoutManager(new LinearLayoutManager(ProductCardActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                            imageAdapter = new ImageAdapter(thumbnailUrls, new ImageAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(String thumbnail) {
+                                    // Xử lý sự kiện click cho từng size ở đây
+                                    System.out.println(thumbnail);
+                                    Glide.with(ProductCardActivity.this).load(thumbnail).into(imageProduct);
+                                    Toast.makeText(ProductCardActivity.this, "Selected Image: " + thumbnail, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            imbRecycleView.setAdapter(imageAdapter);
+                        } else {
+                            // Xử lý khi sizes là null hoặc rỗng
+                            Toast.makeText(ProductCardActivity.this, "No sizes available for this product", Toast.LENGTH_SHORT).show();
+                        }
 
                     } else {
                         Toast.makeText(ProductCardActivity.this, "User not found!", Toast.LENGTH_SHORT).show();
@@ -102,6 +133,9 @@ public class ProductCardActivity extends AppCompatActivity {
 
 
         });
+
+
+
         btnExpandSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,19 +144,25 @@ public class ProductCardActivity extends AppCompatActivity {
                 tvQuantity = viewDialog.findViewById(R.id.tv_quantity);
                 btnPlus = viewDialog.findViewById(R.id.btn_plus);
                 btnMinus = viewDialog.findViewById(R.id.btn_minus);
+                btnConfirm = viewDialog.findViewById(R.id.btn_Identify_Cart);
 
                 ArrayList<String> sizes = product.getSizes();
-                System.out.println(sizes);
-                recyclerView = viewDialog.findViewById(R.id.recyclerView);
-                recyclerView.setLayoutManager(new LinearLayoutManager(ProductCardActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                adapter = new SizeAdapter(sizes, new SizeAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(String size) {
-                        // Xử lý sự kiện click cho từng size ở đây
-                        Toast.makeText(ProductCardActivity.this, "Selected size: " + size, Toast.LENGTH_SHORT).show();
-                    }
-                });
-                recyclerView.setAdapter(adapter);
+                System.out.println("+++++++++++++++++++"+ sizes);
+                if (sizes != null && !sizes.isEmpty()) {
+                    // Tiếp tục xử lý
+                    recyclerView = viewDialog.findViewById(R.id.recyclerView);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(ProductCardActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                    adapter = new SizeAdapter(sizes, new SizeAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(String size) {
+                            isize = size;
+                        }
+                    });
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    // Xử lý khi sizes là null hoặc rỗng
+                    Toast.makeText(ProductCardActivity.this, "No sizes available for this product", Toast.LENGTH_SHORT).show();
+                }
 
                 nQuantity = Integer.parseInt(tvQuantity.getText().toString());
 
@@ -132,36 +172,49 @@ public class ProductCardActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         nQuantity = nQuantity + 1;
                         tvQuantity.setText(String.valueOf(nQuantity));
-                        String sPrice = String.valueOf(Integer.parseInt(product.getPrice()) * nQuantity);
-                        tvPriceBottomSheet.setText(sPrice);
-                        abdc(nQuantity, sPrice);
+                        tvPriceBottomSheet.setText(String.valueOf(Integer.parseInt(product.getPrice()) * nQuantity));
                     }
                 });
 
                 btnMinus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        nQuantity = nQuantity - 1;
-                        tvQuantity.setText(String.valueOf(nQuantity));
-                        String sPrice = String.valueOf(Integer.parseInt(product.getPrice()) * nQuantity);
-                        tvPriceBottomSheet.setText(sPrice);
-                        abdc(nQuantity, sPrice);
+                        if(nQuantity > 1){
+                            nQuantity = nQuantity - 1;
+                            tvQuantity.setText(String.valueOf(nQuantity));
+                            tvPriceBottomSheet.setText(String.valueOf(Integer.parseInt(product.getPrice()) * nQuantity));
+                        }
+
                     }
                 });
 
 
+                btnConfirm.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        String quantity = tvQuantity.getText().toString();
+                        String price = tvPriceBottomSheet.getText().toString();
+                        System.out.println("++++++++++++++++++"+"So luong: "+ quantity + " Gia: " + price+ "Size: "+ isize+ product.getName());
+                        //Mở coment ra mà chạy
+//                        // Tạo intent để mở CartActivity
+//                        Intent intent = new Intent(ProductCardActivity.this, CartActivity.class);
+//                        // Thêm dữ liệu vào intent
+//                        intent.putExtra("product", product.getName());
+//                        intent.putExtra("image", product.getImg());
+//                        intent.putExtra("price", price);
+//                        intent.putExtra("quantity", quantity);
+//                        intent.putExtra("size", isize);
+//                        // Khởi chạy CartActivity
+//                        startActivity(intent);
+                    }
+                });
 
                 BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(ProductCardActivity.this);
                 bottomSheetDialog.setContentView(viewDialog);
                 bottomSheetDialog.show();
             }
 
-
-
-            public void abdc(int nQuantity,String sPrice){
-                System.out.println("-----------------"+product.getId());
-                System.out.println( "So luong: "+nQuantity + "Gia: "+sPrice);
-            }
         });
 
     }
