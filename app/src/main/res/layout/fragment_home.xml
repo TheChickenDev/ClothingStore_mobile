@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HomeFragment">
+    tools:context=".HomeFragment"
+    tools:ignore="MissingConstraints">
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_weight="5"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="1dp">
@@ -36,8 +39,7 @@
             android:layout_weight="1"
             android:background="#FFFFFF"
             android:scaleType="centerInside"
-            android:src="@drawable/cart"
-            tools:ignore="ContentDescription">
+            android:src="@drawable/cart">
         </ImageButton>
 
         <ImageButton
@@ -48,18 +50,16 @@
             android:layout_weight="1"
             android:background="#FFFFFF"
             android:scaleType="centerInside"
-            android:src="@drawable/messge"
-            tools:ignore="ContentDescription">
+            android:src="@drawable/messge">
         </ImageButton>
     </LinearLayout>
 
+
     <ViewFlipper
         android:id="@+id/viewFlipper"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
+        android:layout_width="380dp"
+        android:layout_height="190dp"
+        android:layout_marginTop="8dp"
         android:autoStart="true"
         android:flipInterval="4000"
         android:inAnimation="@android:anim/slide_in_left"
@@ -74,50 +74,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/sale1"
-            tools:ignore="ContentDescription" />
+            app:srcCompat="@drawable/sale1" />
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/sale2"
-            tools:ignore="ContentDescription" />
+            app:srcCompat="@drawable/sale2" />
 
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/sale3"
-            tools:ignore="ContentDescription" />
+            app:srcCompat="@drawable/sale3" />
 
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/sale4"
-            tools:ignore="ContentDescription" />
+            app:srcCompat="@drawable/sale4" />
 
     </ViewFlipper>
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="245dp"
-        android:fillViewport="true"
-        app:layout_constraintHorizontal_bias="1.0"
+        android:layout_height="510dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/viewFlipper">
 
         <LinearLayout
             android:id="@+id/constraintLayout"
-            android:layout_width="380dp"
-            android:layout_height="550dp"
+            android:layout_width="match_parent"
+            android:layout_height="510dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:focusable="true"
@@ -141,7 +137,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvMale"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -163,7 +159,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFemale"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -186,7 +182,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvUnisex"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -209,7 +205,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvJacket"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -232,7 +228,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvAccessory"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -241,5 +237,4 @@
 
         </LinearLayout>
     </ScrollView>
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

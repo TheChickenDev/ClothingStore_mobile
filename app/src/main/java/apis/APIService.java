@@ -30,13 +30,13 @@ public interface APIService {
 
     @GET("product/get")
     Call<SuccessResponseModel<GetProductResponseModel>> getProduct(
-            @Query("limit") Integer limit,
-            @Query("page") Integer page,
+            @Query("limit") String limit,
+            @Query("page") String page,
             @Query("sort_by") String sortBy,
             @Query("order") String order,
-            @Query("price_min") Integer priceMin,
-            @Query("price_max") Integer priceMax,
-            @Query("rating_filter") Integer ratingFilter,
+            @Query("price_min") String priceMin,
+            @Query("price_max") String priceMax,
+            @Query("rating_filter") String ratingFilter,
             @Query("name") String name,
             @Query("type") String type
     );

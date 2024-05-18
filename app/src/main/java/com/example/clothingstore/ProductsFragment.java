@@ -1,12 +1,32 @@
 package com.example.clothingstore;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
+import java.util.List;
+
+import adapters.ClothesAdapter;
+import apis.APIService;
+import classes.SpacesItemDecoration;
+import models.ClothModel;
+import models.GetProductResponseModel;
+import models.SuccessResponseModel;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import utils.RetrofitClient;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +44,12 @@ public class ProductsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private SearchView searchView;
+    private RecyclerView rvProducts;
+    private ImageButton btn_filter;
+    APIService apiService;
+    List<ClothModel> clothesList;
+    ClothesAdapter clothesAdapter;
     public ProductsFragment() {
         // Required empty public constructor
     }
@@ -59,6 +85,61 @@ public class ProductsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_products, container, false);
+        View view = inflater.inflate(R.layout.fragment_products, container, false);
+        Mapping(view);
+        Search(null, null, null, null, null, null, null);
+        return view;
+    }
+
+    private void Mapping(View view) {
+        searchView = view.findViewById(R.id.products_search_view);
+        rvProducts = view.findViewById(R.id.rvProducts);
+        btn_filter = view.findViewById(R.id.products_filter);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Search(null, null, null, null, null, query, null);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        rvProducts.setHasFixedSize(true);
+        rvProducts.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing_6dp);
+        rvProducts.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+    }
+
+    private void Search(String sortBy, String order, String priceMin, String priceMax, String ratingFilter, String query, String type) {
+        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService.getProduct("999", "1", sortBy, order, priceMin, priceMax, ratingFilter, query, type).enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Response<SuccessResponseModel<GetProductResponseModel>> response) {
+                if (response.isSuccessful()) {
+                    SuccessResponseModel<GetProductResponseModel> successResponse = response.body();
+                    if (successResponse != null) {
+                        clothesList = successResponse.getData().getProducts();
+                        clothesAdapter = new ClothesAdapter(getContext(), clothesList);
+                        rvProducts.setAdapter(clothesAdapter);
+                        clothesAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    int statusCode = response.code();
+                    Toast.makeText(getActivity(), "Lỗi rồi kìa! Mã lỗi: " + statusCode, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Throwable t) {
+                String message = t.getMessage() != null ? t.getMessage() : "Lỗi rồi";
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

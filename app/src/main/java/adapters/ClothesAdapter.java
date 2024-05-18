@@ -1,5 +1,6 @@
 package adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.text.TextUtils;
@@ -34,6 +35,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHo
         return myViewHolder;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ClothModel clothes = array.get(position);
@@ -51,7 +53,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHo
 //            }
 //        });
         holder.nameSP.setText(clothes.getName());
-        holder.priceSP.setText(clothes.getPrice());
+        holder.priceSP.setText(clothes.getPrice() + "vnd");
         Glide.with(context)
                 .load(clothes.getImg())
                 .into(holder.images);
@@ -67,11 +69,11 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHo
         public TextView nameSP, priceSP;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            images = (ImageView) itemView.findViewById(R.id.cate_image);
-            nameSP = (TextView) itemView.findViewById(R.id.cate_name);
+            images = (ImageView) itemView.findViewById(R.id.item_image);
+            nameSP = (TextView) itemView.findViewById(R.id.item_name);
             nameSP.setEllipsize(TextUtils.TruncateAt.END);
             nameSP.setMaxLines(1);
-            priceSP = (TextView) itemView.findViewById(R.id.cate_price);
+            priceSP = (TextView) itemView.findViewById(R.id.item_price);
         }
     }
 }
