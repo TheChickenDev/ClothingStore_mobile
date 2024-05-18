@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +21,7 @@ import java.util.Objects;
 
 import adapters.ClothesAdapter;
 import apis.APIService;
+import classes.SpacesItemDecoration;
 import models.ClothModel;
 import models.GetProductResponseModel;
 import models.SuccessResponseModel;
@@ -117,10 +119,17 @@ public class HomeFragment extends Fragment {
     }
     private void AnhXaMale(View view) {
         rcClothesMale = (RecyclerView) view.findViewById(R.id.rvMale);
+
+        rcClothesMale.setHasFixedSize(true);
+        LinearLayoutManager layoutManagerNewArrivals = new LinearLayoutManager(getActivity(),
+                LinearLayoutManager.HORIZONTAL, false);
+        rcClothesMale.setLayoutManager(layoutManagerNewArrivals);
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing_6dp);
+        rcClothesMale.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
     private void GetClothesMale() {
         apiService = RetrofitClient.getRetrofit().create(APIService.class);
-        apiService.getProduct(10, 1, null, null, null, null, null, null, "male").enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
+        apiService.getProduct("10", "1", null, null, null, null, null, null, "male").enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Response<SuccessResponseModel<GetProductResponseModel>> response) {
@@ -128,10 +137,6 @@ public class HomeFragment extends Fragment {
                     SuccessResponseModel<GetProductResponseModel> successResponse = response.body();
                     clothesList = successResponse.getData().getProducts();
                     clothesAdapter = new ClothesAdapter(getContext(), clothesList);
-                    rcClothesMale.setHasFixedSize(true);
-                    LinearLayoutManager layoutManagerBestSeller = new LinearLayoutManager(getActivity(),
-                            LinearLayoutManager.HORIZONTAL, false);
-                    rcClothesMale.setLayoutManager(layoutManagerBestSeller);
                     rcClothesMale.setAdapter(clothesAdapter);
                     clothesAdapter.notifyDataSetChanged();
                 } else {
@@ -150,10 +155,17 @@ public class HomeFragment extends Fragment {
 
     private void AnhXaFemale(View view) {
         rcClothesFemale = (RecyclerView) view.findViewById(R.id.rvFemale);
+
+        rcClothesFemale.setHasFixedSize(true);
+        LinearLayoutManager layoutManagerNewArrivals = new LinearLayoutManager(getActivity(),
+                LinearLayoutManager.HORIZONTAL, false);
+        rcClothesFemale.setLayoutManager(layoutManagerNewArrivals);
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing_6dp);
+        rcClothesFemale.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
     private void GetClothesFemale() {
         apiService = RetrofitClient.getRetrofit().create(APIService.class);
-        apiService.getProduct(10, 1, null, null, null, null, null, null, "female").enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
+        apiService.getProduct("10", "1", null, null, null, null, null, null, "female").enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Response<SuccessResponseModel<GetProductResponseModel>> response) {
@@ -161,10 +173,6 @@ public class HomeFragment extends Fragment {
                     SuccessResponseModel<GetProductResponseModel> successResponse = response.body();
                     clothesList = successResponse.getData().getProducts();
                     clothesAdapter = new ClothesAdapter(getContext(), clothesList);
-                    rcClothesFemale.setHasFixedSize(true);
-                    LinearLayoutManager layoutManagerNewArrivals = new LinearLayoutManager(getActivity(),
-                            LinearLayoutManager.HORIZONTAL, false);
-                    rcClothesFemale.setLayoutManager(layoutManagerNewArrivals);
                     rcClothesFemale.setAdapter(clothesAdapter);
                     clothesAdapter.notifyDataSetChanged();
                 } else {
@@ -183,10 +191,17 @@ public class HomeFragment extends Fragment {
 
     private void AnhXaUnisex(View view) {
         rcClothesUnisex = (RecyclerView) view.findViewById(R.id.rvUnisex);
+
+        rcClothesUnisex.setHasFixedSize(true);
+        LinearLayoutManager layoutManagerNewArrivals = new LinearLayoutManager(getActivity(),
+                LinearLayoutManager.HORIZONTAL, false);
+        rcClothesUnisex.setLayoutManager(layoutManagerNewArrivals);
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing_6dp);
+        rcClothesUnisex.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
     private void GetClothesUnisex() {
         apiService = RetrofitClient.getRetrofit().create(APIService.class);
-        apiService.getProduct(10, 1, null, null, null, null, null, null, "unisex").enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
+        apiService.getProduct("10", "1", null, null, null, null, null, null, "unisex").enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Response<SuccessResponseModel<GetProductResponseModel>> response) {
@@ -194,10 +209,6 @@ public class HomeFragment extends Fragment {
                     SuccessResponseModel<GetProductResponseModel> successResponse = response.body();
                     clothesList = successResponse.getData().getProducts();
                     clothesAdapter = new ClothesAdapter(getContext(), clothesList);
-                    rcClothesUnisex.setHasFixedSize(true);
-                    LinearLayoutManager layoutManagerNewArrivals = new LinearLayoutManager(getActivity(),
-                            LinearLayoutManager.HORIZONTAL, false);
-                    rcClothesUnisex.setLayoutManager(layoutManagerNewArrivals);
                     rcClothesUnisex.setAdapter(clothesAdapter);
                     clothesAdapter.notifyDataSetChanged();
                 } else {
@@ -216,10 +227,17 @@ public class HomeFragment extends Fragment {
 
     private void AnhXaJacket(View view) {
         rcClothesJacket= (RecyclerView) view.findViewById(R.id.rvJacket);
+
+        rcClothesJacket.setHasFixedSize(true);
+        LinearLayoutManager layoutManagerNewArrivals = new LinearLayoutManager(getActivity(),
+                LinearLayoutManager.HORIZONTAL, false);
+        rcClothesJacket.setLayoutManager(layoutManagerNewArrivals);
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing_6dp);
+        rcClothesJacket.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
     private void GetClothesJacket() {
         apiService = RetrofitClient.getRetrofit().create(APIService.class);
-        apiService.getProduct(10, 1, null, null, null, null, null, null, "jacket").enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
+        apiService.getProduct("10", "1", null, null, null, null, null, null, "jacket").enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Response<SuccessResponseModel<GetProductResponseModel>> response) {
@@ -227,10 +245,6 @@ public class HomeFragment extends Fragment {
                     SuccessResponseModel<GetProductResponseModel> successResponse = response.body();
                     clothesList = successResponse.getData().getProducts();
                     clothesAdapter = new ClothesAdapter(getContext(), clothesList);
-                    rcClothesJacket.setHasFixedSize(true);
-                    LinearLayoutManager layoutManagerNewArrivals = new LinearLayoutManager(getActivity(),
-                            LinearLayoutManager.HORIZONTAL, false);
-                    rcClothesJacket.setLayoutManager(layoutManagerNewArrivals);
                     rcClothesJacket.setAdapter(clothesAdapter);
                     clothesAdapter.notifyDataSetChanged();
                 } else {
@@ -249,10 +263,17 @@ public class HomeFragment extends Fragment {
 
     private void AnhXaAccessory(View view) {
         rcClothesAccessory= (RecyclerView) view.findViewById(R.id.rvAccessory);
+
+        rcClothesAccessory.setHasFixedSize(true);
+        LinearLayoutManager layoutManagerNewArrivals = new LinearLayoutManager(getActivity(),
+                LinearLayoutManager.HORIZONTAL, false);
+        rcClothesAccessory.setLayoutManager(layoutManagerNewArrivals);
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing_6dp);
+        rcClothesAccessory.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
     private void GetClothesAccessory() {
         apiService = RetrofitClient.getRetrofit().create(APIService.class);
-        apiService.getProduct(10, 1, null, null, null, null, null, null, "accessory").enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
+        apiService.getProduct("10", "1", null, null, null, null, null, null, "accessory").enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Response<SuccessResponseModel<GetProductResponseModel>> response) {
@@ -260,10 +281,6 @@ public class HomeFragment extends Fragment {
                     SuccessResponseModel<GetProductResponseModel> successResponse = response.body();
                     clothesList = successResponse.getData().getProducts();
                     clothesAdapter = new ClothesAdapter(getContext(), clothesList);
-                    rcClothesAccessory.setHasFixedSize(true);
-                    LinearLayoutManager layoutManagerNewArrivals = new LinearLayoutManager(getActivity(),
-                            LinearLayoutManager.HORIZONTAL, false);
-                    rcClothesAccessory.setLayoutManager(layoutManagerNewArrivals);
                     rcClothesAccessory.setAdapter(clothesAdapter);
                     clothesAdapter.notifyDataSetChanged();
                 } else {
