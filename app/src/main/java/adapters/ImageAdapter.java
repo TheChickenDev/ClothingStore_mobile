@@ -3,8 +3,6 @@ package adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -23,6 +21,8 @@ import java.util.ArrayList;
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
     private String[] thumbnails;
     private OnItemClickListener listener;
+    private static String imageSelectedItem = null;
+
 
     public interface OnItemClickListener {
         void onItemClick(String thumbnail);
@@ -60,13 +60,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         }
 
         public void bind(final String thumbnail, final OnItemClickListener listener) {
-            Glide.with(imgButton.getContext())
-                    .load(thumbnail)
-                    .into(imgButton);
-
+            Glide.with(itemView.getContext()).load(thumbnail).into(imgButton);
             imgButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    imageSelectedItem =thumbnail;
                     if (listener != null) {
                         listener.onItemClick(thumbnail);
                     }

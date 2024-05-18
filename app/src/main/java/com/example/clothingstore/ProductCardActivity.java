@@ -47,7 +47,7 @@ public class ProductCardActivity extends AppCompatActivity {
     private RecyclerView recyclerView, imbRecycleView;
     private SizeAdapter adapter;
     private ImageAdapter imageAdapter;
-    String sQuantity, sPrice, isize;
+    String sQuantity, sPrice, isize, iimageProduct;
     private LinearLayout layoutBottomSheet;
     private BottomSheetBehavior bottomSheetBehavior;
 
@@ -104,10 +104,9 @@ public class ProductCardActivity extends AppCompatActivity {
                             imageAdapter = new ImageAdapter(thumbnailUrls, new ImageAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(String thumbnail) {
-                                    // Xử lý sự kiện click cho từng size ở đây
-                                    System.out.println(thumbnail);
-                                    Glide.with(ProductCardActivity.this).load(thumbnail).into(imageProduct);
-                                    Toast.makeText(ProductCardActivity.this, "Selected Image: " + thumbnail, Toast.LENGTH_SHORT).show();
+                                    iimageProduct = thumbnail;
+                                    System.out.println("-=-=-=-=-=-=-=-"+iimageProduct);
+//                                    Glide.with(ProductCardActivity.this).load(thumbnail).into(iimageProduct);
                                 }
                             });
                             imbRecycleView.setAdapter(imageAdapter);

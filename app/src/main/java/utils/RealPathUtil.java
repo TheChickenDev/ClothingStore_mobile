@@ -7,11 +7,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.view.View;
+
+import com.example.clothingstore.UpdateProfileActivity;
 
 public class RealPathUtil {
 
-    public static String getRealPath(View.OnClickListener context, Uri uri) {
+    public static String getRealPath(UpdateProfileActivity context, Uri uri) {
         String realPath = null;
         // Kiểm tra API level để sử dụng cách lấy đường dẫn phù hợp
         if (Build.VERSION.SDK_INT < 11) {
@@ -97,4 +98,6 @@ public class RealPathUtil {
         }
         return null;
     }
+
+
 }

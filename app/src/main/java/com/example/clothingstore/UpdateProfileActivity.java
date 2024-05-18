@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -124,18 +125,14 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 RequestBody phone = RequestBody.create(MediaType.parse("multipart/form-data"), phoneValue);
                 RequestBody address = RequestBody.create(MediaType.parse("multipart/form-data"), addressValue);
 
-//                String imagePath = RealPathUtil.getRealPath(this, mUri);
-                // Kiểm tra xem có hình ảnh nào được chọn không
-                String imagePath = mUri != null ? mUri.getPath() : null;
+                String imagePath = RealPathUtil.getRealPath(UpdateProfileActivity.this, mUri);
 
                 // Tạo RequestBody cho hình ảnh
-                RequestBody requestFile;
-                MultipartBody.Part avatarUpdate = null;
-                if (imagePath != null) {
-                    File file = new File(imagePath);
-                    requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                    avatarUpdate = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
-                }
+
+                File file = new File(imagePath);
+                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                MultipartBody.Part avatarUpdate = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+
 
                 // Gọi API để cập nhật thông tin người dùng
                 ApiService apiService = ApiRetrofit.getRetrofitClient().create(ApiService.class);
