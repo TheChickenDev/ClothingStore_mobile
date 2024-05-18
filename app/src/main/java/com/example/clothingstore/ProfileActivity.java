@@ -8,20 +8,22 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import apis.APIService;
+import models.SuccessResponseModel;
+import models.UserModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.bumptech.glide.Glide;
 
-import models.SuccessResponse;
 import models.Users;
-import utils.ApiRetrofit;
-
-import utils.ApiService;
+import utils.RetrofitClient;
 
 import android.widget.Toast;
 
+import java.io.Serializable;
 
 
 public class ProfileActivity extends AppCompatActivity {
@@ -48,13 +50,13 @@ public class ProfileActivity extends AppCompatActivity {
         String userId = "65f99e462c619f15e778fb21";
 
         // Call API
-        ApiService apiService = ApiRetrofit.getRetrofitClient().create(ApiService.class);
-        apiService.getUser(userId).enqueue(new Callback<SuccessResponse<Users>>() {
+        APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService.getUser(userId).enqueue(new Callback<SuccessResponseModel<UserModel>>() {
             @Override
-            public void onResponse(@NonNull Call<SuccessResponse<Users>> call, @NonNull Response<SuccessResponse<Users>> response) {
+            public void onResponse(@NonNull Call<SuccessResponseModel<UserModel>> call, @NonNull Response<SuccessResponseModel<UserModel>> response) {
                 if (response.isSuccessful()) {
-                    SuccessResponse<Users> successResponse = response.body();
-                    Users user;
+                    SuccessResponseModel<UserModel> successResponse = response.body();
+                    UserModel user;
                     if (successResponse !=null){
                         user = successResponse.getData();
                         nameTextView.setText(user.getName());
@@ -67,7 +69,7 @@ public class ProfileActivity extends AppCompatActivity {
                         btnUpdateProfile.setOnClickListener(v -> {
                             // Tạo Intent để chuyển từ ProfileActivity sang UpdateProfileActivity
                             Intent intent = new Intent(ProfileActivity.this, UpdateProfileActivity.class);
-                            intent.putExtra("user", user);
+                            intent.putExtra("user", (Serializable) user);
                             // Bắt đầu Activity mới
                             startActivity(intent);
                         });
@@ -83,7 +85,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<SuccessResponse<Users>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<SuccessResponseModel<UserModel>> call, @NonNull Throwable t) {
                 Toast.makeText(ProfileActivity.this, "Network error! Please try again later.", Toast.LENGTH_SHORT).show();
             }
 

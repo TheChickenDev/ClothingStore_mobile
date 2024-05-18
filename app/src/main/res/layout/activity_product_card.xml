@@ -13,7 +13,7 @@
         android:layout_height="50dp">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_back"
+            android:id="@+id/product_card_btn_back"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

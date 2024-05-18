@@ -131,14 +131,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     }
                 } else {
                     int statusCode = response.code();
-                    Toast.makeText(ForgotPasswordActivity.this, "Lỗi rồi kìa! Mã lỗi: " + statusCode, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgotPasswordActivity.this, "Error! Status code: " + statusCode, Toast.LENGTH_SHORT).show();
                 }
                 getOTPCallback.onFunctionCompleted();
             }
 
             @Override
             public void onFailure(@NonNull Call<SuccessResponseModel<String>> call, @NonNull Throwable t) {
-                Toast.makeText(ForgotPasswordActivity.this, "Không thể lấy mã OTP!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ForgotPasswordActivity.this, "Get OTP failed!", Toast.LENGTH_SHORT).show();
                 getOTPCallback.onFunctionCompleted();
             }
         });

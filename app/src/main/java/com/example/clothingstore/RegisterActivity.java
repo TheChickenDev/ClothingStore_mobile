@@ -272,14 +272,14 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 } else {
                     int statusCode = response.code();
-                    Toast.makeText(RegisterActivity.this, "Lỗi rồi kìa! Mã lỗi: " + statusCode, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Error! Status code: " + statusCode, Toast.LENGTH_SHORT).show();
                 }
                 registerCallback.onFunctionCompleted();
             }
 
             @Override
             public void onFailure(@NonNull Call<SuccessResponseModel<AuthResponseModel>> call, @NonNull Throwable t) {
-                Toast.makeText(RegisterActivity.this, "Đăng ký không thành công!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Register failed!", Toast.LENGTH_SHORT).show();
                 registerCallback.onFunctionCompleted();
             }
         });

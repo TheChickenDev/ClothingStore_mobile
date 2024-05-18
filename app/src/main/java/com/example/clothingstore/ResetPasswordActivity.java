@@ -170,14 +170,14 @@ public class ResetPasswordActivity extends AppCompatActivity {
                     }
                 } else {
                     int statusCode = response.code();
-                    Toast.makeText(ResetPasswordActivity.this, "Lỗi rồi kìa! Mã lỗi: " + statusCode, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ResetPasswordActivity.this, "Error! Status code: " + statusCode, Toast.LENGTH_SHORT).show();
                 }
                 resetPasswordCallback.onFunctionCompleted();
             }
 
             @Override
             public void onFailure(@NonNull Call<SuccessResponseModel<String>> call, @NonNull Throwable t) {
-                Toast.makeText(ResetPasswordActivity.this, "Đổi mật khẩu không thành công!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ResetPasswordActivity.this, "Change password failed!", Toast.LENGTH_SHORT).show();
                 resetPasswordCallback.onFunctionCompleted();
             }
         });

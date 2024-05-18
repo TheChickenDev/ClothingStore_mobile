@@ -8,10 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,28 +18,28 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import adapters.ImageAdapter;
 import adapters.SizeAdapter;
+import apis.APIService;
 import models.Product;
-import models.SuccessResponse;
 
-import utils.ApiRetrofit;
-import utils.ApiService;
-
+import models.SuccessResponseModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import utils.RetrofitClient;
 
 public class ProductCardActivity extends AppCompatActivity {
 
     ImageView imageProduct;
     TextView tvSold , tvNameProduct, tvPrice, tvDescription, tvPriceBottomSheet, tvQuantity;
     private Button btnExpandSheet, btnPlus, btnMinus, btnConfirm;
+    private MaterialButton btnBack;
     Product product;
     int nQuantity = 1;
     private RecyclerView recyclerView, imbRecycleView;
@@ -67,17 +65,23 @@ public class ProductCardActivity extends AppCompatActivity {
         tvPrice = findViewById(R.id.tv_price);
         tvDescription = findViewById(R.id.tv_description);
         btnExpandSheet = findViewById(R.id.btn_Add_Cart);
+        btnBack = findViewById(R.id.product_card_btn_back);
+
+        btnBack.setOnClickListener(v -> {
+            Intent intent = new Intent(ProductCardActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
 
-
-
-        String productId = "66116fe4f1bf7f8c4986bd5a";
-        ApiService apiService = ApiRetrofit.getRetrofitClient().create(ApiService.class);
-        apiService.getProduct(productId).enqueue(new Callback<SuccessResponse<Product>>() {
+        Intent intent = getIntent();
+        String productId = intent.getStringExtra("productId");
+        APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService.getProduct(productId).enqueue(new Callback<SuccessResponseModel<Product>>() {
             @Override
-            public void onResponse(@NonNull Call<SuccessResponse<Product>> call, @NonNull Response<SuccessResponse<Product>> response) {
+            public void onResponse(@NonNull Call<SuccessResponseModel<Product>> call, @NonNull Response<SuccessResponseModel<Product>> response) {
                 if (response.isSuccessful()) {
-                    SuccessResponse<Product> successResponse = response.body();
+                    SuccessResponseModel<Product> successResponse = response.body();
 
                     if (successResponse !=null){
                         product = successResponse.getData();
@@ -96,7 +100,6 @@ public class ProductCardActivity extends AppCompatActivity {
                             thumbnailUrls.add(thumbnail.getUrl());
                         }
 
-                        System.out.println("-------------------"+thumbnailUrls);
                         if (!thumbnailUrls.isEmpty()) {
                             // Tiếp tục xử lý
                             imbRecycleView = findViewById(R.id.imagebutton_recycleview);
@@ -105,8 +108,7 @@ public class ProductCardActivity extends AppCompatActivity {
                                 @Override
                                 public void onItemClick(String thumbnail) {
                                     iimageProduct = thumbnail;
-                                    System.out.println("-=-=-=-=-=-=-=-"+iimageProduct);
-//                                    Glide.with(ProductCardActivity.this).load(thumbnail).into(iimageProduct);
+                                    Glide.with(ProductCardActivity.this).load(thumbnail).into(imageProduct);
                                 }
                             });
                             imbRecycleView.setAdapter(imageAdapter);
@@ -124,9 +126,8 @@ public class ProductCardActivity extends AppCompatActivity {
                 }
 
             }
-
             @Override
-            public void onFailure(@NonNull Call<SuccessResponse<Product>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<SuccessResponseModel<Product>> call, @NonNull Throwable t) {
                 Toast.makeText(ProductCardActivity.this, "Network error! Please try again later.", Toast.LENGTH_SHORT).show();
             }
 
@@ -146,7 +147,6 @@ public class ProductCardActivity extends AppCompatActivity {
                 btnConfirm = viewDialog.findViewById(R.id.btn_Identify_Cart);
 
                 ArrayList<String> sizes = product.getSizes();
-                System.out.println("+++++++++++++++++++"+ sizes);
                 if (sizes != null && !sizes.isEmpty()) {
                     // Tiếp tục xử lý
                     recyclerView = viewDialog.findViewById(R.id.recyclerView);
@@ -194,7 +194,6 @@ public class ProductCardActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         String quantity = tvQuantity.getText().toString();
                         String price = tvPriceBottomSheet.getText().toString();
-                        System.out.println("++++++++++++++++++"+"So luong: "+ quantity + " Gia: " + price+ "Size: "+ isize+ product.getName());
                         //Mở coment ra mà chạy
 //                        // Tạo intent để mở CartActivity
 //                        Intent intent = new Intent(ProductCardActivity.this, CartActivity.class);

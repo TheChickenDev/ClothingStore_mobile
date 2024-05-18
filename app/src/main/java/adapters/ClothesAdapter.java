@@ -3,6 +3,7 @@ package adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.clothingstore.ProductCardActivity;
 import com.example.clothingstore.R;
 
 import java.text.NumberFormat;
@@ -41,19 +43,14 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ClothModel clothes = array.get(position);
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), HomeActivity.class);
-//                Bundle b = new Bundle();
-//                b.putString("idclothes", clothesModel.getId());
-//                b.putString("imgclothes", clothesModel.getImg());
-//                b.putString("nameclothes", clothesModel.getName());
-//                b.putString("priceclothes", clothesModel.getPrice());
-//                intent.putExtras(b);
-//                v.getContext().startActivity(intent);
-//            }
-//        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ProductCardActivity.class);
+                intent.putExtra("productId", clothes.getId());
+                v.getContext().startActivity(intent);
+            }
+        });
         holder.nameSP.setText(clothes.getName());
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.GERMANY);
         String formattedPrice = numberFormat.format(Integer.parseInt(clothes.getPrice())) + "vnd";

@@ -1,10 +1,8 @@
 package com.example.clothingstore;
-import static android.content.ContentValues.TAG;
 
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -12,7 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,23 +26,23 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.IOException;
 
-import models.SuccessResponse;
+import apis.APIService;
+import models.SuccessResponseModel;
+import models.UserModel;
 import models.Users;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import utils.ApiRetrofit;
-import utils.ApiService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import utils.RealPathUtil;
+import utils.RetrofitClient;
 
 public class UpdateProfileActivity extends AppCompatActivity {
 
@@ -135,11 +132,11 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
 
                 // Gọi API để cập nhật thông tin người dùng
-                ApiService apiService = ApiRetrofit.getRetrofitClient().create(ApiService.class);
+                APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
                 apiService.updateUser(userId, name, phone, address, avatarUpdate)
-                        .enqueue(new Callback<SuccessResponse<Users>>() {
+                        .enqueue(new Callback<SuccessResponseModel<UserModel>>() {
                             @Override
-                            public void onResponse(@NonNull Call<SuccessResponse<Users>> call, @NonNull Response<SuccessResponse<Users>> response) {
+                            public void onResponse(@NonNull Call<SuccessResponseModel<UserModel>> call, @NonNull Response<SuccessResponseModel<UserModel>> response) {
                                 if (response.isSuccessful()) {
                                     // Hiển thị thông báo cập nhật thành công
                                     Intent intent = new Intent(UpdateProfileActivity.this, ProfileActivity.class);
@@ -153,7 +150,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFailure(@NonNull Call<SuccessResponse<Users>> call, @NonNull Throwable t) {
+                            public void onFailure(@NonNull Call<SuccessResponseModel<UserModel>> call, @NonNull Throwable t) {
                                 // Hiển thị thông báo lỗi
                                 Toast.makeText(UpdateProfileActivity.this, "Đã xảy ra lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                             }

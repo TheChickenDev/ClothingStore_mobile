@@ -172,14 +172,14 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 } else {
                     int statusCode = response.code();
-                    Toast.makeText(LoginActivity.this, "Lỗi rồi kìa! Mã lỗi: " + statusCode, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Error! Status code: " + statusCode, Toast.LENGTH_SHORT).show();
                 }
                 loginCallback.onFunctionCompleted();
             }
 
             @Override
             public void onFailure(@NonNull Call<SuccessResponseModel<AuthResponseModel>> call, @NonNull Throwable t) {
-                Toast.makeText(LoginActivity.this, "Đăng nhập không thành công!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Login failed!", Toast.LENGTH_SHORT).show();
                 loginCallback.onFunctionCompleted();
             }
         });
