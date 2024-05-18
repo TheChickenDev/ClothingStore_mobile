@@ -35,11 +35,26 @@
             android:name=".UpdateProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProductsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ResetPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".ProductCardActivity"
-            android:exported="true">
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
