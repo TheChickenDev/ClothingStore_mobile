@@ -151,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void Login(String email, String password, Callbacks loginCallback) {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         apiService = RetrofitClient.getRetrofit().create(APIService.class);
         apiService.login(email, password).enqueue(new Callback<SuccessResponseModel<AuthResponseModel>>() {
             @Override
