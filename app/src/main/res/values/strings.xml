@@ -53,4 +53,13 @@
     <string name="cart_price">Price</string>
     <string name="cart_size">Size</string>
     <string name="cart_quantity">Quantity</string>
+
+    <string-array name="arrangement_filter">
+        <item>All</item>
+        <item>New products</item>
+        <item>Popular products</item>
+        <item>Best seller</item>
+        <item>Price asc</item>
+        <item>Price desc</item>
+    </string-array>
 </resources>

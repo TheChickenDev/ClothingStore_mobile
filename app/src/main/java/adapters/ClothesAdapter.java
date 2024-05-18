@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.clothingstore.R;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import models.ClothModel;
 
@@ -53,7 +55,9 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHo
 //            }
 //        });
         holder.nameSP.setText(clothes.getName());
-        holder.priceSP.setText(clothes.getPrice() + "vnd");
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.GERMANY);
+        String formattedPrice = numberFormat.format(Integer.parseInt(clothes.getPrice())) + "vnd";
+        holder.priceSP.setText(formattedPrice);
         Glide.with(context)
                 .load(clothes.getImg())
                 .into(holder.images);
