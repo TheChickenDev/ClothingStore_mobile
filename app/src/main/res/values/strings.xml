@@ -4,33 +4,47 @@
     <string name="input_email_hint">Email</string>
     <string name="input_password_hint">Password</string>
     <string name="input_confirm_password_hint">Confirm password</string>
-
     <string name="input_name_hint">Full name</string>
     <string name="input_address_hint">Address</string>
     <string name="input_phone_hint">Phone number</string>
+    <string name="input_otp_hint">OTP</string>
 
     <string name="activity_login_login_btn">Log in</string>
     <string name="activity_login_logo_desc">Logo</string>
     <string name="activity_google_logo_desc">Google</string>
     <string name="activity_facebook_logo_desc">Facebook</string>
-    <string name="activity_login_signup_btn"><u>Sign up</u></string>
-    <string name="activity_login_signup_label">Don\'t have an account?</string>
-    <string name="activity_login_get_password_btn"><u>Get password</u></string>
+    <string name="activity_login_signup_btn">Sign up</string>
+    <string name="activity_login_signup_label">Don\'t have account?</string>
+    <string name="activity_login_get_password_btn">Get password</string>
     <string name="activity_login_get_password_label">Forgot your password?</string>
     <string name="activity_login_login_with_label">Login with</string>
 
     <string name="activity_register_login_label">Already have an account?</string>
-    <string name="activity_register_login_btn"><u>Sign in</u></string>
-    <string name="activity_register_register_btn"><u>Sign up</u></string>
+    <string name="activity_register_login_btn">Sign in</string>
+    <string name="activity_register_register_btn">Sign up</string>
+
+    <string name="activity_forgot_password_btn">Receive OTP</string>
+    <string name="activity_forgot_password_login_label">Already have an account?</string>
+    <string name="activity_forgot_password_login_btn">Sign in</string>
+    <string name="activity_forgot_password_register_label">Don\'t have account?</string>
+    <string name="activity_forgot_password_register_btn">Sign up</string>
+
+    <string name="activity_reset_password_btn">Reset password</string>
+    <string name="activity_reset_password_login_label">Already have an account?</string>
+    <string name="activity_reset_password_login_btn">Sign in</string>
+    <string name="activity_reset_password_register_label">Don\'t have account?</string>
+    <string name="activity_reset_password_register_btn">Sign up</string>
+
+    <string name="list_best_seller">Best Seller</string>
+    <string name="list_new_arrivals">New Arrivals</string>
+    <string name="item_name">Item name</string>
+    <string name="item_price">Item price</string>
 
     <string name="list_male">Male</string>
     <string name="list_female">Female</string>
     <string name="list_unisex">Unisex</string>
     <string name="list_jacket">Jacket</string>
     <string name="list_accessory">Accessory</string>
-
-    <string name="item_name">Item name</string>
-    <string name="item_price">Item price</string>
 
     <string name="title_cart">Cart</string>
     <string name="title_delete">Delete</string>

@@ -7,7 +7,9 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface APIService {
     @FormUrlEncoded
@@ -18,18 +20,24 @@ public interface APIService {
     @POST("user/register")
     Call<SuccessResponseModel<AuthResponseModel>> register(@Field("name") String name, @Field("email") String email, @Field("password") String password, @Field("confirm_password") String confirm_password, @Field("address") String address, @Field("phone") String phone);
 
-    @GET("product/get?type=male")
-    Call<SuccessResponseModel<GetProductResponseModel>> getProductMale();
+    @FormUrlEncoded
+    @POST("user/forgot-password")
+    Call<SuccessResponseModel<String>> getOTP(@Field("email") String email);
 
-    @GET("product/get?type=female")
-    Call<SuccessResponseModel<GetProductResponseModel>> getProductFemale();
+    @FormUrlEncoded
+    @PATCH("user/reset-password")
+    Call<SuccessResponseModel<String>> resetPassword(@Field("key") String key, @Field("token") String token, @Field("password") String password, @Field("confirm_password") String confirm_password);
 
-    @GET("product/get?type=unisex")
-    Call<SuccessResponseModel<GetProductResponseModel>> getProductUnisex();
-
-    @GET("product/get?type=jacket")
-    Call<SuccessResponseModel<GetProductResponseModel>> getProductJacket();
-
-    @GET("product/get?type=accessory")
-    Call<SuccessResponseModel<GetProductResponseModel>> getProductAccessory();
+    @GET("product/get")
+    Call<SuccessResponseModel<GetProductResponseModel>> getProduct(
+            @Query("limit") Integer limit,
+            @Query("page") Integer page,
+            @Query("sort_by") String sortBy,
+            @Query("order") String order,
+            @Query("price_min") Integer priceMin,
+            @Query("price_max") Integer priceMax,
+            @Query("rating_filter") Integer ratingFilter,
+            @Query("name") String name,
+            @Query("type") String type
+    );
 }

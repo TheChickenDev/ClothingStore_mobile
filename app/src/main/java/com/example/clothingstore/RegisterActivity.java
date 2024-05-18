@@ -13,12 +13,14 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
 import apis.APIService;
+import interfaces.Callbacks;
 import models.AuthResponseModel;
 import models.SuccessResponseModel;
 import retrofit2.Call;
@@ -42,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextInputEditText input_phone;
     Button btn_login;
     Button btn_register;
+    CircularProgressIndicator progressIndicator;
     APIService apiService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void Mapping() {
+        progressIndicator = findViewById(R.id.register_progress);
         input_name = findViewById(R.id.register_input_name);
         layout_name = findViewById(R.id.register_layout_name);
         input_email = findViewById(R.id.register_input_email);
@@ -140,8 +144,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String confirm_password = s.toString();
                 String password = Objects.requireNonNull(input_password.getText()).toString();
-                System.out.println("-----" + password + "-----" + confirm_password + "-----" + validate.validateConfirmPassword(password, confirm_password));
-                if (validate.validateConfirmPassword(password, confirm_password)) {
+                if (!validate.validateConfirmPassword(password, confirm_password)) {
                     layout_confirm_password.setError("Invalid re-enter password");
                 } else {
                     layout_confirm_password.setError(null);
@@ -206,7 +209,6 @@ public class RegisterActivity extends AppCompatActivity {
                 String address = Objects.requireNonNull(input_address.getText()).toString();
                 String phone = Objects.requireNonNull(input_phone.getText()).toString();
                 boolean isValidForm = true;
-                System.out.println("-----" + password + "-----" + confirm_password + "-----" + validate.validateConfirmPassword(password, confirm_password));
                 if (!validate.validateName(name)) {
                     layout_name.setError("Invalid name");
                     isValidForm = false;
@@ -231,7 +233,15 @@ public class RegisterActivity extends AppCompatActivity {
                     layout_phone.setError("Invalid phone number");
                 }
                 if (isValidForm) {
-                    Register(name, email, password, confirm_password, address, phone);
+                    progressIndicator.setVisibility(View.VISIBLE);
+                    btn_register.setVisibility(View.GONE);
+                    Register(name, email, password, confirm_password, address, phone, new Callbacks() {
+                        @Override
+                        public void onFunctionCompleted() {
+                            progressIndicator.setVisibility(View.GONE);
+                            btn_register.setVisibility(View.VISIBLE);
+                        }
+                    });
                 }
             }
         });
@@ -245,7 +255,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void Register(String name, String email, String password, String confirm_password, String address, String phone) {
+    private void Register(String name, String email, String password, String confirm_password, String address, String phone, Callbacks registerCallback) {
         Intent intent = new Intent(this, LoginActivity.class);
         apiService = RetrofitClient.getRetrofit().create(APIService.class);
         apiService.register(name, email, password, confirm_password, address, phone).enqueue(new Callback<SuccessResponseModel<AuthResponseModel>>() {
@@ -255,22 +265,22 @@ public class RegisterActivity extends AppCompatActivity {
                     SuccessResponseModel<AuthResponseModel> successResponse = response.body();
                     if (successResponse != null) {
                         if (successResponse.getData() != null) {
-                            Toast.makeText(RegisterActivity.this, successResponse.getMessage(), Toast.LENGTH_SHORT).show();
                             startActivity(intent);
                             finish();
-                        } else {
-                            Toast.makeText(RegisterActivity.this, successResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         }
+                        Toast.makeText(RegisterActivity.this, successResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     int statusCode = response.code();
                     Toast.makeText(RegisterActivity.this, "Lỗi rồi kìa! Mã lỗi: " + statusCode, Toast.LENGTH_SHORT).show();
                 }
+                registerCallback.onFunctionCompleted();
             }
 
             @Override
             public void onFailure(@NonNull Call<SuccessResponseModel<AuthResponseModel>> call, @NonNull Throwable t) {
-                Toast.makeText(RegisterActivity.this, "Lỗi rồi kìa! (" + t.getMessage() + ")", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Đăng ký không thành công!", Toast.LENGTH_SHORT).show();
+                registerCallback.onFunctionCompleted();
             }
         });
     }
