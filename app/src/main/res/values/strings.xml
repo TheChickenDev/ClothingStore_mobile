@@ -7,7 +7,7 @@
     <string name="input_name_hint">Full name</string>
     <string name="input_address_hint">Address</string>
     <string name="input_phone_hint">Phone number</string>
-    <string name="input_otp">OTP</string>
+    <string name="input_otp_hint">OTP</string>
 
     <string name="activity_login_login_btn">Log in</string>
     <string name="activity_login_logo_desc">Logo</string>
@@ -39,4 +39,27 @@
     <string name="list_new_arrivals">New Arrivals</string>
     <string name="item_name">Item name</string>
     <string name="item_price">Item price</string>
+
+    <string name="list_male">Male</string>
+    <string name="list_female">Female</string>
+    <string name="list_unisex">Unisex</string>
+    <string name="list_jacket">Jacket</string>
+    <string name="list_accessory">Accessory</string>
+
+    <string name="title_cart">Cart</string>
+    <string name="title_delete">Delete</string>
+    <string name="title_payment">Payment</string>
+    <string name="cart_name">Name</string>
+    <string name="cart_price">Price</string>
+    <string name="cart_size">Size</string>
+    <string name="cart_quantity">Quantity</string>
+
+    <string-array name="arrangement_filter">
+        <item>All</item>
+        <item>New products</item>
+        <item>Popular products</item>
+        <item>Best seller</item>
+        <item>Price asc</item>
+        <item>Price desc</item>
+    </string-array>
 </resources>
