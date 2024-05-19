@@ -51,6 +51,9 @@ public class RealPathUtil {
     }
 
     private static String getRealPathFromUriAboveApi19(Context context, Uri uri) {
+        if (uri == null) {
+            return null;
+        }
         String realPath = null;
         if (DocumentsContract.isDocumentUri(context, uri)) {
             // Nếu là một tài liệu được lưu trữ trên dịch vụ DocumentsProvider

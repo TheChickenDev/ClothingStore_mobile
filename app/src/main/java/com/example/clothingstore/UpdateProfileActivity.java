@@ -127,13 +127,13 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 RequestBody phone = RequestBody.create(MediaType.parse("multipart/form-data"), phoneValue);
                 RequestBody address = RequestBody.create(MediaType.parse("multipart/form-data"), addressValue);
 
-                String imagePath = RealPathUtil.getRealPath(UpdateProfileActivity.this, mUri);
-
-                // Tạo RequestBody cho hình ảnh
-
-                File file = new File(imagePath);
-                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                MultipartBody.Part avatarUpdate = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+                MultipartBody.Part avatarUpdate = null;
+                if (mUri != null) {
+                    String imagePath = RealPathUtil.getRealPath(UpdateProfileActivity.this, mUri);
+                    File file = new File(imagePath);
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                    avatarUpdate = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+                }
 
 
                 // Gọi API để cập nhật thông tin người dùng
@@ -221,8 +221,9 @@ public class UpdateProfileActivity extends AppCompatActivity {
                             return;
                         }
                         Uri uri = data.getData();
-                        assert uri != null;
-                        mUri = uri;
+                        if (uri != null) {
+                            mUri = uri;
+                        }
                         try {
                             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
                             updateAvatarImageView.setImageBitmap(bitmap);
