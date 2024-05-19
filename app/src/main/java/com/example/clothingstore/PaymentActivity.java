@@ -101,7 +101,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     private void GetUserCart() {
         String userId = preferencesManager.getId();
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit(this).create(APIService.class);
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1; // Note: months are 0-based in Calendar
@@ -160,7 +160,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     private void Pay(Callbacks payCallback) {
         String userId = preferencesManager.getId();
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit(this).create(APIService.class);
 
         Calendar calendar = Calendar.getInstance();
         int orderYear = calendar.get(Calendar.YEAR);

@@ -73,7 +73,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void GetUserCart() {
         String userId = preferencesManager.getId();
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit(this).create(APIService.class);
         apiService.getUser(userId).enqueue(new Callback<SuccessResponseModel<UserModel>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override

@@ -20,6 +20,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.Objects;
 
 import apis.APIService;
+import classes.PreferencesManager;
 import interfaces.Callbacks;
 import models.AuthResponseModel;
 import models.SuccessResponseModel;
@@ -257,7 +258,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void Register(String name, String email, String password, String confirm_password, String address, String phone, Callbacks registerCallback) {
         Intent intent = new Intent(this, LoginActivity.class);
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit(this).create(APIService.class);
         apiService.register(name, email, password, confirm_password, address, phone).enqueue(new Callback<SuccessResponseModel<AuthResponseModel>>() {
             @Override
             public void onResponse(@NonNull Call<SuccessResponseModel<AuthResponseModel>> call, @NonNull Response<SuccessResponseModel<AuthResponseModel>> response) {

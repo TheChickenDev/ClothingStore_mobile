@@ -63,7 +63,7 @@ public class ProductCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_card);
 
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit(this).create(APIService.class);
         preferencesManager = new PreferencesManager(this);
         imageProduct = findViewById(R.id.iv_product);
         tvSold = findViewById(R.id.tv_sold);
@@ -82,7 +82,7 @@ public class ProductCardActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String productId = intent.getStringExtra("productId");
-        APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        APIService apiService = RetrofitClient.getRetrofit(this).create(APIService.class);
         apiService.getProduct(productId).enqueue(new Callback<SuccessResponseModel<ProductModel>>() {
             @Override
             public void onResponse(@NonNull Call<SuccessResponseModel<ProductModel>> call, @NonNull Response<SuccessResponseModel<ProductModel>> response) {

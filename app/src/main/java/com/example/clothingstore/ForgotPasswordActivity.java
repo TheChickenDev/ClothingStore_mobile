@@ -19,6 +19,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.Objects;
 
 import apis.APIService;
+import classes.PreferencesManager;
 import interfaces.Callbacks;
 import models.SuccessResponseModel;
 import retrofit2.Call;
@@ -114,7 +115,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         } else {
             layout_email.setError(null);
         }
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit(this).create(APIService.class);
         apiService.getOTP(email).enqueue(new Callback<SuccessResponseModel<String>>() {
             @Override
             public void onResponse(@NonNull Call<SuccessResponseModel<String>> call, @NonNull Response<SuccessResponseModel<String>> response) {

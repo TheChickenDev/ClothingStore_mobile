@@ -14,6 +14,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
@@ -85,6 +86,9 @@ public interface APIService {
             @Field("productId") String productId,
             @Field("size") String size
     );
+
+    @POST("user/refresh-token")
+    Call<SuccessResponseModel<String>> refreshToken();
 
     @FormUrlEncoded
     @POST("user/payment/{id}")

@@ -20,6 +20,7 @@ import java.util.List;
 
 import adapters.ClothesAdapter;
 import apis.APIService;
+import classes.PreferencesManager;
 import classes.SpacesItemDecoration;
 import models.ProductModel;
 import models.GetProductResponseModel;
@@ -176,7 +177,7 @@ public class ProductsFragment extends Fragment {
     }
 
     private void Search(String sortBy, String order, String priceMin, String priceMax, String ratingFilter, String query, String type) {
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit(getContext()).create(APIService.class);
         apiService.getProduct("999", "1", sortBy, order, priceMin, priceMax, ratingFilter, query, type).enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override

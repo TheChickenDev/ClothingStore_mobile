@@ -20,6 +20,7 @@ import java.util.List;
 
 import adapters.ClothesAdapter;
 import apis.APIService;
+import classes.PreferencesManager;
 import classes.SpacesItemDecoration;
 import models.ProductModel;
 import models.GetProductResponseModel;
@@ -97,7 +98,8 @@ public class HomeFragment extends Fragment {
         rcClothesMale.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
     private void GetClothesMale() {
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        PreferencesManager preferencesManager = new PreferencesManager(getContext());
+        apiService = RetrofitClient.getRetrofit(getContext()).create(APIService.class);
         apiService.getProduct("10", "1", null, null, null, null, null, null, "male").enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -133,7 +135,8 @@ public class HomeFragment extends Fragment {
         rcClothesFemale.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
     private void GetClothesFemale() {
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        PreferencesManager preferencesManager = new PreferencesManager(getContext());
+        apiService = RetrofitClient.getRetrofit(getContext()).create(APIService.class);
         apiService.getProduct("10", "1", null, null, null, null, null, null, "female").enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -169,7 +172,8 @@ public class HomeFragment extends Fragment {
         rcClothesUnisex.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
     private void GetClothesUnisex() {
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        PreferencesManager preferencesManager = new PreferencesManager(getContext());
+        apiService = RetrofitClient.getRetrofit(getContext()).create(APIService.class);
         apiService.getProduct("10", "1", null, null, null, null, null, null, "unisex").enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -205,7 +209,8 @@ public class HomeFragment extends Fragment {
         rcClothesJacket.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
     private void GetClothesJacket() {
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        PreferencesManager preferencesManager = new PreferencesManager(getContext());
+        apiService = RetrofitClient.getRetrofit(getContext()).create(APIService.class);
         apiService.getProduct("10", "1", null, null, null, null, null, null, "jacket").enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -241,7 +246,7 @@ public class HomeFragment extends Fragment {
         rcClothesAccessory.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
     private void GetClothesAccessory() {
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit(getContext()).create(APIService.class);
         apiService.getProduct("10", "1", null, null, null, null, null, null, "accessory").enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override

@@ -62,7 +62,7 @@ public class OrdersActivity extends AppCompatActivity {
 
     private void GetOrders() {
         String userId = preferencesManager.getId();
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit(this).create(APIService.class);
         apiService.getOrders(userId).enqueue(new Callback<SuccessResponseModel<List<OrderModel>>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
