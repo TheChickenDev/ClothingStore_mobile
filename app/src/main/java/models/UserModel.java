@@ -1,8 +1,9 @@
 package models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class UserModel {
+public class UserModel implements Serializable {
     String _id;
     String name;
     String email;
@@ -21,6 +22,18 @@ public class UserModel {
         this.phone = phone;
         this.avatar = avatar;
         this.cart = cart;
+    }
+
+    public String getTotalPay() {
+        if (cart.isEmpty())
+            return "0";
+        double totalPrice = 0.0;
+        for (ClothCartModel item : cart) {
+            double price = Double.parseDouble(item.getPrice());
+            int quantity = Integer.parseInt(item.getQuantity());
+            totalPrice += price * quantity;
+        }
+        return String.valueOf(totalPrice);
     }
 
     public String getId() {

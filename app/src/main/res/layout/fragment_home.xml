@@ -43,17 +43,6 @@
             android:scaleType="centerInside"
             android:src="@drawable/cart">
         </ImageButton>
-
-        <ImageButton
-            android:layout_width="36dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="18dp"
-            android:layout_weight="1"
-            android:background="#FFFFFF"
-            android:scaleType="centerInside"
-            android:src="@drawable/messge">
-        </ImageButton>
     </LinearLayout>
 
 

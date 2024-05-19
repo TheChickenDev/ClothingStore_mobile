@@ -11,14 +11,12 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import adapters.CartAdapter;
-import adapters.ClothesAdapter;
 import apis.APIService;
 import classes.PreferencesManager;
 import classes.SpacesItemDecoration;
@@ -62,13 +60,14 @@ public class CartActivity extends AppCompatActivity {
         rv_cart.setLayoutManager(layoutManagerNewArrivals);
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing_6dp);
         rv_cart.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CartActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        btn_back.setOnClickListener(v -> {
+            Intent intent = new Intent(CartActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+        btn_payment.setOnClickListener(v -> {
+            Intent intent = new Intent(CartActivity.this, PaymentActivity.class);
+            startActivity(intent);
         });
     }
 

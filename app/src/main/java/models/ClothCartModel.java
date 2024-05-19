@@ -2,7 +2,9 @@ package models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ClothCartModel {
+import java.io.Serializable;
+
+public class ClothCartModel implements Serializable {
     @SerializedName("productId")
     private String id;
     private String name;

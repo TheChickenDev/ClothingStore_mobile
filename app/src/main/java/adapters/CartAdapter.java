@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.clothingstore.CartActivity;
+import com.example.clothingstore.OrderDetailActivity;
+import com.example.clothingstore.PaymentActivity;
 import com.example.clothingstore.ProductCardActivity;
 import com.example.clothingstore.R;
 
@@ -71,7 +73,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                 @SuppressLint("NotifyDataSetChanged")
                 @Override
                 public void onResponse(@NonNull Call<SuccessResponseModel<UserModel>> call, @NonNull Response<SuccessResponseModel<UserModel>> response) {
-                    System.out.println("-----" + call.request().body());
                     if (response.isSuccessful()) {
                         SuccessResponseModel<UserModel> successResponse = response.body();
                         if (successResponse != null) {
@@ -91,6 +92,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                 }
             });
         });
+        if (context instanceof OrderDetailActivity || context instanceof PaymentActivity) {
+            holder.btn_delete.setVisibility(View.GONE);
+        }
         holder.nameSP.setText(clothes.getName());
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.GERMANY);
         String formattedPrice = numberFormat.format(Integer.parseInt(clothes.getPrice())) + "vnd";

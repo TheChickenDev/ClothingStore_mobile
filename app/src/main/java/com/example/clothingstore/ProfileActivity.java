@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import apis.APIService;
+import classes.PreferencesManager;
 import models.SuccessResponseModel;
 import models.UserModel;
 import retrofit2.Call;
@@ -23,18 +24,21 @@ import utils.RetrofitClient;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 
 public class ProfileActivity extends AppCompatActivity {
     TextView nameTextView, phoneTextView, emailTextView, addressTextView;
     ImageView avatarImageView;
     Button btnUpdateProfile, btnBack;
+    PreferencesManager preferencesManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        preferencesManager = new PreferencesManager(this);
 
         // Initialize views
         nameTextView = findViewById(R.id.tv_name_value);
@@ -44,9 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
         avatarImageView = findViewById(R.id.imageViewProfile);
         btnBack = findViewById(R.id.btn_back);
         btnUpdateProfile = findViewById(R.id.btn_update);
-        // Get user ID from intent
-//        String userId = getIntent().getStringExtra("USER_ID");
-        String userId = "65f99e462c619f15e778fb21";
+        String userId = preferencesManager.getId();
 
         // Call API
         APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
@@ -62,13 +64,15 @@ public class ProfileActivity extends AppCompatActivity {
                         phoneTextView.setText(user.getPhone());
                         emailTextView.setText(user.getEmail());
                         addressTextView.setText(user.getAddress());
-                        // Hien avatar ra imageView
-                        Glide.with(ProfileActivity.this).load(user.getAvatar()).into(avatarImageView);
+                        if (!user.getAvatar().isEmpty()) {
+                            // Hien avatar ra imageView
+                            Glide.with(ProfileActivity.this).load(user.getAvatar()).into(avatarImageView);
+                        }
 
                         btnUpdateProfile.setOnClickListener(v -> {
                             // Tạo Intent để chuyển từ ProfileActivity sang UpdateProfileActivity
                             Intent intent = new Intent(ProfileActivity.this, UpdateProfileActivity.class);
-                            intent.putExtra("user", (Serializable) user);
+                            intent.putExtra("user", user);
                             // Bắt đầu Activity mới
                             startActivity(intent);
                         });

@@ -1,7 +1,10 @@
 package apis;
 
+import java.util.List;
+
 import models.AuthResponseModel;
 import models.GetProductResponseModel;
+import models.OrderModel;
 import models.ProductModel;
 import models.SuccessResponseModel;
 import models.UserModel;
@@ -52,8 +55,7 @@ public interface APIService {
 
     @GET("product/get-by-id/{id}")
     Call<SuccessResponseModel<ProductModel>> getProduct(@Path("id") String productId);
-    //
-//    @FormUrlEncoded
+
     @Multipart
     @PATCH("user/update/{id}")
     Call<SuccessResponseModel<UserModel>> updateUser(
@@ -82,5 +84,23 @@ public interface APIService {
             @Path("id") String userId,
             @Field("productId") String productId,
             @Field("size") String size
+    );
+
+    @FormUrlEncoded
+    @POST("user/payment/{id}")
+    Call<SuccessResponseModel<UserModel>> payment(
+            @Path("id") String userId,
+            @Field("orderDate") String orderDate,
+            @Field("deliveryDate") String deliveryDate,
+            @Field("price") String price,
+            @Field("shippingFee") String shippingFee,
+            @Field("totalAmount") String totalAmount,
+            @Field("note") String note,
+            @Field("paymentMethod") String paymentMethod
+    );
+
+    @GET("order/get-by-user/{id}")
+    Call<SuccessResponseModel<List<OrderModel>>> getOrders(
+            @Path("id") String userId
     );
 }
