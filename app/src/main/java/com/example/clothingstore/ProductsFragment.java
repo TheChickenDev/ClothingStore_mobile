@@ -20,7 +20,6 @@ import java.util.List;
 
 import adapters.ClothesAdapter;
 import apis.APIService;
-import classes.PreferencesManager;
 import classes.SpacesItemDecoration;
 import models.ProductModel;
 import models.GetProductResponseModel;
@@ -38,6 +37,8 @@ public class ProductsFragment extends Fragment {
     private String query;
 
     private RecyclerView rvProducts;
+    SearchView searchView;
+    ImageButton btn_filter;
     APIService apiService;
     List<ProductModel> clothesList;
     ClothesAdapter clothesAdapter;
@@ -53,12 +54,14 @@ public class ProductsFragment extends Fragment {
         type = "";
         price = "";
         rating = "";
+        query = "";
         Bundle args = getArguments();
         if (args != null) {
             arrangement = args.getString("arrangement");
             type = args.getString("type");
             price = args.getString("price");
             rating = args.getString("rating");
+            query = args.getString("query");
         }
     }
 
@@ -73,9 +76,13 @@ public class ProductsFragment extends Fragment {
     }
 
     private void Mapping(View view) {
-        SearchView searchView = view.findViewById(R.id.products_search_view);
+        searchView = view.findViewById(R.id.products_search_view);
         rvProducts = view.findViewById(R.id.rvProducts);
-        ImageButton btn_filter = view.findViewById(R.id.products_filter);
+        btn_filter = view.findViewById(R.id.products_filter);
+
+        if (query != null) {
+            searchView.setQuery(query, false);
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -113,7 +120,7 @@ public class ProductsFragment extends Fragment {
         String priceMin = null;
         String priceMax = null;
         String ratingFilter = null;
-        if (!arrangement.isEmpty())
+        if (!(arrangement == null))
             switch (arrangement) {
                 case "New products":
                     sortBy = "updatedAt";
@@ -133,7 +140,7 @@ public class ProductsFragment extends Fragment {
                     order = "desc";
                     break;
             }
-        if (!price.isEmpty())
+        if (!(price == null))
             switch (price) {
                 case "1.000đ - 50.000đ":
                     priceMin = "1000";
@@ -155,7 +162,7 @@ public class ProductsFragment extends Fragment {
                     priceMin = "200000";
                     break;
             }
-        if (!rating.isEmpty())
+        if (!(rating == null))
             switch (rating) {
                 case "★ ☆ ☆ ☆ ☆":
                     ratingFilter = "1";
@@ -173,7 +180,7 @@ public class ProductsFragment extends Fragment {
                     ratingFilter = "5";
                     break;
             }
-        Search(sortBy, order, priceMin, priceMax, ratingFilter, query, type.isEmpty() ? null : type.toLowerCase());
+        Search(sortBy, order, priceMin, priceMax, ratingFilter, query, type == null ? null : type.toLowerCase());
     }
 
     private void Search(String sortBy, String order, String priceMin, String priceMax, String ratingFilter, String query, String type) {

@@ -1,6 +1,7 @@
 package com.example.clothingstore;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -182,6 +183,9 @@ public class PaymentActivity extends AppCompatActivity {
                     SuccessResponseModel<UserModel> successResponse = response.body();
                     if (successResponse != null) {
                         Toast.makeText(PaymentActivity.this, successResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
                 } else {
                     int statusCode = response.code();

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -72,6 +73,19 @@ public class HomeFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                if (query.isEmpty()) return false;
+
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+                ProductsFragment productsFragment = new ProductsFragment();
+                Bundle args = new Bundle();
+                args.putString("query", query);
+                productsFragment.setArguments(args);
+
+                transaction.replace(R.id.main_frame_layout, productsFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
                 return true;
             }
 
