@@ -42,7 +42,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        String thumbnail = thumbnails[0];
+        String thumbnail = thumbnails[position];
         holder.bind(thumbnail, listener);
     }
 

@@ -75,6 +75,7 @@ public class ProfileActivity extends AppCompatActivity {
                             intent.putExtra("user", user);
                             // Bắt đầu Activity mới
                             startActivity(intent);
+                            finish();
                         });
 
                     } else {

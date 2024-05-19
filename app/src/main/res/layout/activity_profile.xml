@@ -72,7 +72,7 @@
             android:id="@+id/tableLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="32dp"
             android:layout_marginTop="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -88,15 +88,16 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Họ tên:"
-                    android:textSize="26sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_name_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="9"
-                    android:textSize="24sp" />
+                    android:layout_weight="2"
+                    android:paddingLeft="10dp"
+                    android:textSize="20sp" />
             </TableRow>
 
             <TableRow android:layout_marginBottom="30dp">
@@ -106,16 +107,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Số điện thoại:"
-                    android:textSize="26sp"
+                    android:text="Điện thoại:"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_phoneNumber_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="9"
-                    android:textSize="24sp" />
+                    android:layout_weight="2"
+                    android:paddingLeft="10dp"
+                    android:textSize="20sp" />
             </TableRow>
 
             <TableRow android:layout_marginBottom="30dp">
@@ -126,15 +128,16 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Email:"
-                    android:textSize="26sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_email_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="9"
-                    android:textSize="24sp" />
+                    android:layout_weight="2"
+                    android:paddingLeft="10dp"
+                    android:textSize="20sp" />
             </TableRow>
 
             <TableRow android:layout_marginBottom="30dp">
@@ -145,15 +148,16 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Địa chỉ:"
-                    android:textSize="26sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_address_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="9"
-                    android:textSize="24sp" />
+                    android:layout_weight="2"
+                    android:paddingLeft="10dp"
+                    android:textSize="20sp" />
             </TableRow>
 
 

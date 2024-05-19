@@ -101,11 +101,12 @@ public class ProductCardActivity extends AppCompatActivity {
                         Glide.with(ProductCardActivity.this).load(product.getImg()).into(imageProduct);
 
                         ArrayList<String> thumbnailUrls = new ArrayList<>();
+                        thumbnailUrls.add(0, product.getImg());
                         List<ProductModel.Thumbnail> thumbnails = product.getThumbnails();
                         for (ProductModel.Thumbnail thumbnail : thumbnails) {
                             thumbnailUrls.add(thumbnail.getUrl());
                         }
-
+                        System.out.println(thumbnailUrls);
                         if (!thumbnailUrls.isEmpty()) {
                             // Tiếp tục xử lý
                             imbRecycleView = findViewById(R.id.imagebutton_recycleview);

@@ -2,7 +2,7 @@
 <ImageView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/btn_view_list"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:background="#FF0000"
-    android:layout_margin="3dp" />
+    android:layout_width="100dp"
+    android:layout_height="120dp"
+    android:scaleType="fitCenter"
+    android:layout_gravity="center"/>

@@ -56,16 +56,22 @@
         android:layout_gravity="center"
         app:srcCompat="@drawable/aokhoac_imv" />
 
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/imagebutton_recycleview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:orientation="horizontal"/>
+        android:layout_weight="1"
+        android:orientation="horizontal" />
 
-
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"
