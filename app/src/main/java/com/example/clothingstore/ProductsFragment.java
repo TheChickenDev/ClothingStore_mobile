@@ -21,7 +21,7 @@ import java.util.List;
 import adapters.ClothesAdapter;
 import apis.APIService;
 import classes.SpacesItemDecoration;
-import models.ClothModel;
+import models.ProductModel;
 import models.GetProductResponseModel;
 import models.SuccessResponseModel;
 import retrofit2.Call;
@@ -38,7 +38,7 @@ public class ProductsFragment extends Fragment {
 
     private RecyclerView rvProducts;
     APIService apiService;
-    List<ClothModel> clothesList;
+    List<ProductModel> clothesList;
     ClothesAdapter clothesAdapter;
 
     public ProductsFragment() {

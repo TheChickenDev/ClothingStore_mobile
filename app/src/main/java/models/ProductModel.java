@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Product implements Serializable {
+public class ProductModel implements Serializable {
     @SerializedName("_id")
     private String id;
 
@@ -81,7 +81,7 @@ public class Product implements Serializable {
         }
     }
 
-    public Product(String id, String sold, String name, String desc, String price, String img, List<Thumbnail> thumbnails, ArrayList<String> sizes) {
+    public ProductModel(String id, String sold, String name, String desc, String price, String img, List<Thumbnail> thumbnails, ArrayList<String> sizes) {
         this.id = id;
         this.sold = sold;
         this.name = name;

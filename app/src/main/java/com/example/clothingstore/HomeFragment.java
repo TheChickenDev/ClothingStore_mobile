@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,12 +17,11 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.List;
-import java.util.Objects;
 
 import adapters.ClothesAdapter;
 import apis.APIService;
 import classes.SpacesItemDecoration;
-import models.ClothModel;
+import models.ProductModel;
 import models.GetProductResponseModel;
 import models.SuccessResponseModel;
 import retrofit2.Call;
@@ -34,7 +32,7 @@ import utils.RetrofitClient;
 public class HomeFragment extends Fragment {
     ClothesAdapter clothesAdapter;
     APIService apiService;
-    List<ClothModel> clothesList;
+    List<ProductModel> clothesList;
     RecyclerView rcClothesMale, rcClothesFemale, rcClothesUnisex, rcClothesJacket, rcClothesAccessory;
     SearchView searchView;
     ImageButton btn_cart;

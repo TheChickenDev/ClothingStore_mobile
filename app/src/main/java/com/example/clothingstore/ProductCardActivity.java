@@ -26,9 +26,12 @@ import java.util.List;
 import adapters.ImageAdapter;
 import adapters.SizeAdapter;
 import apis.APIService;
-import models.Product;
+import classes.PreferencesManager;
+import models.AuthResponseModel;
+import models.ProductModel;
 
 import models.SuccessResponseModel;
+import models.UserModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,10 +40,10 @@ import utils.RetrofitClient;
 public class ProductCardActivity extends AppCompatActivity {
 
     ImageView imageProduct;
-    TextView tvSold , tvNameProduct, tvPrice, tvDescription, tvPriceBottomSheet, tvQuantity;
+    TextView tvSold , tvNameProduct, tvPrice, tvDescription, tvPriceBottomSheet, tvQuantity, tvSize;
     private Button btnExpandSheet, btnPlus, btnMinus, btnConfirm;
     private MaterialButton btnBack;
-    Product product;
+    ProductModel product;
     int nQuantity = 1;
     private RecyclerView recyclerView, imbRecycleView;
     private SizeAdapter adapter;
@@ -48,7 +51,8 @@ public class ProductCardActivity extends AppCompatActivity {
     String sQuantity, sPrice, isize, iimageProduct;
     private LinearLayout layoutBottomSheet;
     private BottomSheetBehavior bottomSheetBehavior;
-
+    private APIService apiService;
+    private PreferencesManager preferencesManager;
 
     public static String removeHtmlTags(String htmlDescription) {
         // Sử dụng Html.fromHtml() với mode legacy để loại bỏ các thẻ HTML
@@ -59,6 +63,8 @@ public class ProductCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_card);
 
+        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        preferencesManager = new PreferencesManager(this);
         imageProduct = findViewById(R.id.iv_product);
         tvSold = findViewById(R.id.tv_sold);
         tvNameProduct = findViewById(R.id.tv_nameProduct);
@@ -77,11 +83,11 @@ public class ProductCardActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String productId = intent.getStringExtra("productId");
         APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
-        apiService.getProduct(productId).enqueue(new Callback<SuccessResponseModel<Product>>() {
+        apiService.getProduct(productId).enqueue(new Callback<SuccessResponseModel<ProductModel>>() {
             @Override
-            public void onResponse(@NonNull Call<SuccessResponseModel<Product>> call, @NonNull Response<SuccessResponseModel<Product>> response) {
+            public void onResponse(@NonNull Call<SuccessResponseModel<ProductModel>> call, @NonNull Response<SuccessResponseModel<ProductModel>> response) {
                 if (response.isSuccessful()) {
-                    SuccessResponseModel<Product> successResponse = response.body();
+                    SuccessResponseModel<ProductModel> successResponse = response.body();
 
                     if (successResponse !=null){
                         product = successResponse.getData();
@@ -95,8 +101,8 @@ public class ProductCardActivity extends AppCompatActivity {
                         Glide.with(ProductCardActivity.this).load(product.getImg()).into(imageProduct);
 
                         ArrayList<String> thumbnailUrls = new ArrayList<>();
-                        List<Product.Thumbnail> thumbnails = product.getThumbnails();
-                        for (Product.Thumbnail thumbnail : thumbnails) {
+                        List<ProductModel.Thumbnail> thumbnails = product.getThumbnails();
+                        for (ProductModel.Thumbnail thumbnail : thumbnails) {
                             thumbnailUrls.add(thumbnail.getUrl());
                         }
 
@@ -127,7 +133,7 @@ public class ProductCardActivity extends AppCompatActivity {
 
             }
             @Override
-            public void onFailure(@NonNull Call<SuccessResponseModel<Product>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<SuccessResponseModel<ProductModel>> call, @NonNull Throwable t) {
                 Toast.makeText(ProductCardActivity.this, "Network error! Please try again later.", Toast.LENGTH_SHORT).show();
             }
 
@@ -192,19 +198,34 @@ public class ProductCardActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(View v) {
+                        String userId = preferencesManager.getId();
                         String quantity = tvQuantity.getText().toString();
-                        String price = tvPriceBottomSheet.getText().toString();
-                        //Mở coment ra mà chạy
-//                        // Tạo intent để mở CartActivity
-//                        Intent intent = new Intent(ProductCardActivity.this, CartActivity.class);
-//                        // Thêm dữ liệu vào intent
-//                        intent.putExtra("product", product.getName());
-//                        intent.putExtra("image", product.getImg());
-//                        intent.putExtra("price", price);
-//                        intent.putExtra("quantity", quantity);
-//                        intent.putExtra("size", isize);
-//                        // Khởi chạy CartActivity
-//                        startActivity(intent);
+                        if (isize == null) {
+                            Toast.makeText(ProductCardActivity.this, "Please choose product size!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        apiService.addToCart(userId, product.getId(), product.getName(), product.getImg(), isize, quantity, product.getPrice()).enqueue(new Callback<SuccessResponseModel<UserModel>>() {
+                            @Override
+                            public void onResponse(@NonNull Call<SuccessResponseModel<UserModel>> call, @NonNull Response<SuccessResponseModel<UserModel>> response) {
+                                if (response.isSuccessful()) {
+                                    SuccessResponseModel<UserModel> successResponse = response.body();
+                                    if (successResponse != null) {
+                                        Intent intent1 = new Intent(ProductCardActivity.this, CartActivity.class);
+                                        startActivity(intent1);
+                                        finish();
+                                        Toast.makeText(ProductCardActivity.this, successResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    int statusCode = response.code();
+                                    Toast.makeText(ProductCardActivity.this, "Error! Status code: " + statusCode, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(@NonNull Call<SuccessResponseModel<UserModel>> call, @NonNull Throwable t) {
+                                Toast.makeText(ProductCardActivity.this, "Add to cart failed!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
 

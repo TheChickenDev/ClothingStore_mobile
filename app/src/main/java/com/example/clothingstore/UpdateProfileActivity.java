@@ -33,7 +33,6 @@ import java.io.IOException;
 import apis.APIService;
 import models.SuccessResponseModel;
 import models.UserModel;
-import models.Users;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -50,7 +49,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     EditText nameEdt, phoneEdt, addressEdt;
     TextView  emailTv;
     Button btnBack, btnUpload;
-    Users currentUser;
+    UserModel currentUser;
     ImageView updateAvatarImageView;
     MultipartBody.Part imagePart;
     Uri mUri;
@@ -85,9 +84,9 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
         // Lấy dữ liệu người dùng từ Intent
         Intent intent = getIntent();
-        currentUser = (Users) intent.getSerializableExtra("user");
+        currentUser = (UserModel) intent.getSerializableExtra("user");
         assert currentUser != null;
-        String userId = currentUser.getid();
+        String userId = currentUser.getId();
         if (currentUser != null) {
             // Hiển thị thông tin người dùng trong giao diện chỉnh sửa
             nameEdt.setText(currentUser.getName());

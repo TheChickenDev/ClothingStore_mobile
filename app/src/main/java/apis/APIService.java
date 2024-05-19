@@ -2,7 +2,7 @@ package apis;
 
 import models.AuthResponseModel;
 import models.GetProductResponseModel;
-import models.Product;
+import models.ProductModel;
 import models.SuccessResponseModel;
 import models.UserModel;
 import okhttp3.MultipartBody;
@@ -51,7 +51,7 @@ public interface APIService {
     Call<SuccessResponseModel<UserModel>> getUser(@Path("id") String userId);
 
     @GET("product/get-by-id/{id}")
-    Call<SuccessResponseModel<Product>> getProduct(@Path("id") String productId);
+    Call<SuccessResponseModel<ProductModel>> getProduct(@Path("id") String productId);
     //
 //    @FormUrlEncoded
     @Multipart

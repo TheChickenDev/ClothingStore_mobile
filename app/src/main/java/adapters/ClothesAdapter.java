@@ -22,12 +22,12 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
-import models.ClothModel;
+import models.ProductModel;
 
 public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHolder> {
     Context context;
-    List<ClothModel> array;
-    public ClothesAdapter(Context context, List<ClothModel> array) {
+    List<ProductModel> array;
+    public ClothesAdapter(Context context, List<ProductModel> array) {
         this.context = context;
         this.array = array;
     }
@@ -42,7 +42,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHo
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        ClothModel clothes = array.get(position);
+        ProductModel clothes = array.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

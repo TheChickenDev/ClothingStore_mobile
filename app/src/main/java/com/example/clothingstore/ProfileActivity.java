@@ -18,7 +18,6 @@ import retrofit2.Response;
 
 import com.bumptech.glide.Glide;
 
-import models.Users;
 import utils.RetrofitClient;
 
 import android.widget.Toast;
