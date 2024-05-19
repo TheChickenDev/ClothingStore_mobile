@@ -51,14 +51,14 @@ public class ProfileActivity extends AppCompatActivity {
         String userId = preferencesManager.getId();
 
         // Call API
-        APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        APIService apiService = RetrofitClient.getRetrofit(this).create(APIService.class);
         apiService.getUser(userId).enqueue(new Callback<SuccessResponseModel<UserModel>>() {
             @Override
             public void onResponse(@NonNull Call<SuccessResponseModel<UserModel>> call, @NonNull Response<SuccessResponseModel<UserModel>> response) {
                 if (response.isSuccessful()) {
                     SuccessResponseModel<UserModel> successResponse = response.body();
                     UserModel user;
-                    if (successResponse !=null){
+                    if (successResponse != null){
                         user = successResponse.getData();
                         nameTextView.setText(user.getName());
                         phoneTextView.setText(user.getPhone());
@@ -83,14 +83,14 @@ public class ProfileActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(ProfileActivity.this, "Failed to fetch user details!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileActivity.this, "Error! Status code: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void onFailure(@NonNull Call<SuccessResponseModel<UserModel>> call, @NonNull Throwable t) {
-                Toast.makeText(ProfileActivity.this, "Network error! Please try again later.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
 

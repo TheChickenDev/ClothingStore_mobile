@@ -143,16 +143,16 @@ public class LoginActivity extends AppCompatActivity {
         String email = preferencesManager.getEmail();
         String password = preferencesManager.getPassword();
         progressIndicator.setVisibility(View.VISIBLE);
-//        btn_login.setVisibility(View.GONE);
+        btn_login.setVisibility(View.GONE);
         Login(email, password, () -> {
             progressIndicator.setVisibility(View.GONE);
-//            btn_login.setVisibility(View.VISIBLE);
+            btn_login.setVisibility(View.VISIBLE);
         });
     }
 
     private void Login(String email, String password, Callbacks loginCallback) {
         Intent intent = new Intent(this, MainActivity.class);
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit(this).create(APIService.class);
         apiService.login(email, password).enqueue(new Callback<SuccessResponseModel<AuthResponseModel>>() {
             @Override
             public void onResponse(@NonNull Call<SuccessResponseModel<AuthResponseModel>> call, @NonNull Response<SuccessResponseModel<AuthResponseModel>> response) {

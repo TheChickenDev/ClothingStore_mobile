@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.IOException;
 
 import apis.APIService;
+import classes.PreferencesManager;
 import models.SuccessResponseModel;
 import models.UserModel;
 import okhttp3.MediaType;
@@ -137,8 +138,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
 
                 // Gọi API để cập nhật thông tin người dùng
-                APIService APIService = RetrofitClient.getRetrofit().create(APIService.class);
-                APIService.updateUser(userId, name, phone, address, avatarUpdate)
+                APIService apiService = RetrofitClient.getRetrofit(UpdateProfileActivity.this).create(APIService.class);
+                apiService.updateUser(userId, name, phone, address, avatarUpdate)
                         .enqueue(new Callback<SuccessResponseModel<UserModel>>() {
                             @Override
                             public void onResponse(@NonNull Call<SuccessResponseModel<UserModel>> call, @NonNull Response<SuccessResponseModel<UserModel>> response) {
@@ -150,14 +151,14 @@ public class UpdateProfileActivity extends AppCompatActivity {
                                     finish();
                                 } else {
                                     // Hiển thị thông báo cập nhật thất bại
-                                    Toast.makeText(UpdateProfileActivity.this, "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(UpdateProfileActivity.this, response.message(), Toast.LENGTH_SHORT).show();
                                 }
                             }
 
                             @Override
                             public void onFailure(@NonNull Call<SuccessResponseModel<UserModel>> call, @NonNull Throwable t) {
                                 // Hiển thị thông báo lỗi
-                                Toast.makeText(UpdateProfileActivity.this, "Đã xảy ra lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(UpdateProfileActivity.this, "Error! " + t.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
             }

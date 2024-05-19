@@ -68,7 +68,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
             String userId = preferencesManager.getId();
             String productId = clothes.getId();
             String productSize = clothes.getSize();
-            apiService = RetrofitClient.getRetrofit().create(APIService.class);
+            apiService = RetrofitClient.getRetrofit(context).create(APIService.class);
             apiService.removeFromCart(userId, productId, productSize).enqueue(new Callback<SuccessResponseModel<UserModel>>() {
                 @SuppressLint("NotifyDataSetChanged")
                 @Override
