@@ -194,7 +194,7 @@ public class ProductsFragment extends Fragment {
                     if (successResponse != null) {
                         clothesList = successResponse.getData().getProducts();
                         if (clothesList.isEmpty()) {
-                            Toast.makeText(getContext(), "Không tìm thấy sản phẩm phù hợp!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "No products found!", Toast.LENGTH_SHORT).show();
                         } else {
                             clothesAdapter = new ClothesAdapter(getContext(), clothesList);
                             rvProducts.setAdapter(clothesAdapter);
@@ -203,13 +203,13 @@ public class ProductsFragment extends Fragment {
                     }
                 } else {
                     int statusCode = response.code();
-                    Toast.makeText(getActivity(), "Lỗi rồi kìa! Mã lỗi: " + statusCode, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Error! Status code: " + statusCode, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<SuccessResponseModel<GetProductResponseModel>> call, @NonNull Throwable t) {
-                String message = t.getMessage() != null ? t.getMessage() : "Lỗi rồi";
+                String message = t.getMessage() != null ? t.getMessage() : "Error!";
                 Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
             }
         });
