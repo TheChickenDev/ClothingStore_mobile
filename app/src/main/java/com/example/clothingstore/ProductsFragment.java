@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +21,7 @@ import java.util.List;
 import adapters.ClothesAdapter;
 import apis.APIService;
 import classes.SpacesItemDecoration;
-import models.ClothModel;
+import models.ProductModel;
 import models.GetProductResponseModel;
 import models.SuccessResponseModel;
 import retrofit2.Call;
@@ -28,56 +29,39 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import utils.RetrofitClient;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProductsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProductsFragment extends Fragment {
+    private String arrangement;
+    private String type;
+    private String price;
+    private String rating;
+    private String query;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private SearchView searchView;
     private RecyclerView rvProducts;
-    private ImageButton btn_filter;
+    SearchView searchView;
+    ImageButton btn_filter;
     APIService apiService;
-    List<ClothModel> clothesList;
+    List<ProductModel> clothesList;
     ClothesAdapter clothesAdapter;
+
     public ProductsFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProductsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ProductsFragment newInstance(String param1, String param2) {
-        ProductsFragment fragment = new ProductsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+        arrangement = "";
+        type = "";
+        price = "";
+        rating = "";
+        query = "";
+        Bundle args = getArguments();
+        if (args != null) {
+            arrangement = args.getString("arrangement");
+            type = args.getString("type");
+            price = args.getString("price");
+            rating = args.getString("rating");
+            query = args.getString("query");
         }
     }
 
@@ -87,7 +71,7 @@ public class ProductsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_products, container, false);
         Mapping(view);
-        Search(null, null, null, null, null, null, null);
+        HandleSearchRequest();
         return view;
     }
 
@@ -96,10 +80,15 @@ public class ProductsFragment extends Fragment {
         rvProducts = view.findViewById(R.id.rvProducts);
         btn_filter = view.findViewById(R.id.products_filter);
 
+        if (query != null) {
+            searchView.setQuery(query, false);
+        }
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                Search(null, null, null, null, null, query, null);
+            public boolean onQueryTextSubmit(String q) {
+                query = q;
+                HandleSearchRequest();
                 return true;
             }
 
@@ -109,14 +98,93 @@ public class ProductsFragment extends Fragment {
             }
         });
 
+        btn_filter.setOnClickListener(v -> {
+            Fragment parentFragment = getParentFragment();
+            if (parentFragment != null) {
+                FragmentTransaction transaction = parentFragment.getChildFragmentManager().beginTransaction();
+                transaction.replace(R.id.shop_frame_layout, new FilterFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
         rvProducts.setHasFixedSize(true);
         rvProducts.setLayoutManager(new GridLayoutManager(getContext(), 2));
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing_6dp);
         rvProducts.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
 
+    private void HandleSearchRequest() {
+        String sortBy = null;
+        String order = null;
+        String priceMin = null;
+        String priceMax = null;
+        String ratingFilter = null;
+        if (!(arrangement == null))
+            switch (arrangement) {
+                case "New products":
+                    sortBy = "updatedAt";
+                    break;
+                case "Popular products":
+                    sortBy = "view";
+                    break;
+                case "Best seller":
+                    sortBy = "sold";
+                    break;
+                case "Price asc":
+                    sortBy = "price";
+                    order = "asc";
+                    break;
+                case "Price desc":
+                    sortBy = "price";
+                    order = "desc";
+                    break;
+            }
+        if (!(price == null))
+            switch (price) {
+                case "1.000đ - 50.000đ":
+                    priceMin = "1000";
+                    priceMax = "50000";
+                    break;
+                case "51.000đ - 100.000đ":
+                    priceMin = "51000";
+                    priceMax = "100000";
+                    break;
+                case "101.000đ - 150.000đ":
+                    priceMin = "101000";
+                    priceMax = "150000";
+                    break;
+                case "151.000đ - 200.000đ":
+                    priceMin = "151000";
+                    priceMax = "200000";
+                    break;
+                case "> 200.000đ":
+                    priceMin = "200000";
+                    break;
+            }
+        if (!(rating == null))
+            switch (rating) {
+                case "★ ☆ ☆ ☆ ☆":
+                    ratingFilter = "1";
+                    break;
+                case "★ ★ ☆ ☆ ☆":
+                    ratingFilter = "2";
+                    break;
+                case "★ ★ ★ ☆ ☆":
+                    ratingFilter = "3";
+                    break;
+                case "★ ★ ★ ★ ☆":
+                    ratingFilter = "4";
+                    break;
+                case "★ ★ ★ ★ ★":
+                    ratingFilter = "5";
+                    break;
+            }
+        Search(sortBy, order, priceMin, priceMax, ratingFilter, query, type == null ? null : type.toLowerCase());
+    }
+
     private void Search(String sortBy, String order, String priceMin, String priceMax, String ratingFilter, String query, String type) {
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit(getContext()).create(APIService.class);
         apiService.getProduct("999", "1", sortBy, order, priceMin, priceMax, ratingFilter, query, type).enqueue(new Callback<SuccessResponseModel<GetProductResponseModel>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -125,9 +193,13 @@ public class ProductsFragment extends Fragment {
                     SuccessResponseModel<GetProductResponseModel> successResponse = response.body();
                     if (successResponse != null) {
                         clothesList = successResponse.getData().getProducts();
-                        clothesAdapter = new ClothesAdapter(getContext(), clothesList);
-                        rvProducts.setAdapter(clothesAdapter);
-                        clothesAdapter.notifyDataSetChanged();
+                        if (clothesList.isEmpty()) {
+                            Toast.makeText(getContext(), "Không tìm thấy sản phẩm phù hợp!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            clothesAdapter = new ClothesAdapter(getContext(), clothesList);
+                            rvProducts.setAdapter(clothesAdapter);
+                            clothesAdapter.notifyDataSetChanged();
+                        }
                     }
                 } else {
                     int statusCode = response.code();

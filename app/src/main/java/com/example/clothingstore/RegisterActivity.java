@@ -20,6 +20,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.Objects;
 
 import apis.APIService;
+import classes.PreferencesManager;
 import interfaces.Callbacks;
 import models.AuthResponseModel;
 import models.SuccessResponseModel;
@@ -257,7 +258,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void Register(String name, String email, String password, String confirm_password, String address, String phone, Callbacks registerCallback) {
         Intent intent = new Intent(this, LoginActivity.class);
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit(this).create(APIService.class);
         apiService.register(name, email, password, confirm_password, address, phone).enqueue(new Callback<SuccessResponseModel<AuthResponseModel>>() {
             @Override
             public void onResponse(@NonNull Call<SuccessResponseModel<AuthResponseModel>> call, @NonNull Response<SuccessResponseModel<AuthResponseModel>> response) {
@@ -272,14 +273,14 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 } else {
                     int statusCode = response.code();
-                    Toast.makeText(RegisterActivity.this, "Lỗi rồi kìa! Mã lỗi: " + statusCode, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Error! Status code: " + statusCode, Toast.LENGTH_SHORT).show();
                 }
                 registerCallback.onFunctionCompleted();
             }
 
             @Override
             public void onFailure(@NonNull Call<SuccessResponseModel<AuthResponseModel>> call, @NonNull Throwable t) {
-                Toast.makeText(RegisterActivity.this, "Đăng ký không thành công!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Register failed!", Toast.LENGTH_SHORT).show();
                 registerCallback.onFunctionCompleted();
             }
         });

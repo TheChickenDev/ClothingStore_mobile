@@ -143,16 +143,16 @@ public class LoginActivity extends AppCompatActivity {
         String email = preferencesManager.getEmail();
         String password = preferencesManager.getPassword();
         progressIndicator.setVisibility(View.VISIBLE);
-//        btn_login.setVisibility(View.GONE);
+        btn_login.setVisibility(View.GONE);
         Login(email, password, () -> {
             progressIndicator.setVisibility(View.GONE);
-//            btn_login.setVisibility(View.VISIBLE);
+            btn_login.setVisibility(View.VISIBLE);
         });
     }
 
     private void Login(String email, String password, Callbacks loginCallback) {
         Intent intent = new Intent(this, MainActivity.class);
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit(this).create(APIService.class);
         apiService.login(email, password).enqueue(new Callback<SuccessResponseModel<AuthResponseModel>>() {
             @Override
             public void onResponse(@NonNull Call<SuccessResponseModel<AuthResponseModel>> call, @NonNull Response<SuccessResponseModel<AuthResponseModel>> response) {
@@ -172,14 +172,14 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 } else {
                     int statusCode = response.code();
-                    Toast.makeText(LoginActivity.this, "Lỗi rồi kìa! Mã lỗi: " + statusCode, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Error! Status code: " + statusCode, Toast.LENGTH_SHORT).show();
                 }
                 loginCallback.onFunctionCompleted();
             }
 
             @Override
             public void onFailure(@NonNull Call<SuccessResponseModel<AuthResponseModel>> call, @NonNull Throwable t) {
-                Toast.makeText(LoginActivity.this, "Đăng nhập không thành công!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Login failed!", Toast.LENGTH_SHORT).show();
                 loginCallback.onFunctionCompleted();
             }
         });

@@ -19,6 +19,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.Objects;
 
 import apis.APIService;
+import classes.PreferencesManager;
 import interfaces.Callbacks;
 import models.SuccessResponseModel;
 import retrofit2.Call;
@@ -114,7 +115,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         } else {
             layout_email.setError(null);
         }
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit(this).create(APIService.class);
         apiService.getOTP(email).enqueue(new Callback<SuccessResponseModel<String>>() {
             @Override
             public void onResponse(@NonNull Call<SuccessResponseModel<String>> call, @NonNull Response<SuccessResponseModel<String>> response) {
@@ -131,14 +132,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     }
                 } else {
                     int statusCode = response.code();
-                    Toast.makeText(ForgotPasswordActivity.this, "Lỗi rồi kìa! Mã lỗi: " + statusCode, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgotPasswordActivity.this, "Error! Status code: " + statusCode, Toast.LENGTH_SHORT).show();
                 }
                 getOTPCallback.onFunctionCompleted();
             }
 
             @Override
             public void onFailure(@NonNull Call<SuccessResponseModel<String>> call, @NonNull Throwable t) {
-                Toast.makeText(ForgotPasswordActivity.this, "Không thể lấy mã OTP!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ForgotPasswordActivity.this, "Get OTP failed!", Toast.LENGTH_SHORT).show();
                 getOTPCallback.onFunctionCompleted();
             }
         });

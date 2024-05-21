@@ -24,6 +24,7 @@
             android:background="@drawable/shapebgsearch"
             app:iconifiedByDefault="false"
             app:queryBackground="@null"
+            app:queryHint="Find in HeinShop"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="16dp" />
 

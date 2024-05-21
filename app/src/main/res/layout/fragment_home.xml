@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="60dp"
         android:layout_weight="5"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,19 +20,21 @@
         <androidx.appcompat.widget.SearchView
             android:id="@+id/home_search_view"
             android:layout_width="250dp"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:layout_weight="3"
             android:background="@drawable/shapebgsearch"
             app:iconifiedByDefault="false"
             app:queryBackground="@null"
+            app:queryHint="Find in HeinShop"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="16dp" />
 
         <ImageButton
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:id="@+id/home_btn_cart"
+            android:layout_width="36dp"
+            android:layout_height="48dp"
             android:layout_marginStart="6dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
@@ -40,17 +42,6 @@
             android:background="#FFFFFF"
             android:scaleType="centerInside"
             android:src="@drawable/cart">
-        </ImageButton>
-
-        <ImageButton
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="18dp"
-            android:layout_weight="1"
-            android:background="#FFFFFF"
-            android:scaleType="centerInside"
-            android:src="@drawable/messge">
         </ImageButton>
     </LinearLayout>
 
@@ -102,8 +93,9 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:layout_marginTop="240dp"
+        android:layout_height="510dp"
+        android:layout_marginTop="260dp"
+        android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -114,7 +106,7 @@
         <LinearLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="510dp"
+            android:layout_height="480dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:focusable="true"

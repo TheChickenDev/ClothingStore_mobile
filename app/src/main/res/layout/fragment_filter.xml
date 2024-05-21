@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FilterFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Arrangement"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                tools:ignore="HardcodedText" />
+
+            <Spinner
+                android:id="@+id/spinner_arrangement"
+                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                tools:ignore="HardcodedText" />
+
+            <RadioGroup
+                android:id="@+id/filter_radio_group_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male"
+                    tools:ignore="HardcodedText" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female"
+                    tools:ignore="HardcodedText" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Unisex"
+                    tools:ignore="HardcodedText" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jacket"
+                    tools:ignore="HardcodedText" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Accessory"
+                    tools:ignore="HardcodedText" />
+
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                tools:ignore="HardcodedText" />
+
+            <RadioGroup
+                android:id="@+id/filter_radio_group_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1.000đ - 50.000đ"
+                    tools:ignore="HardcodedText" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="51.000đ - 100.000đ"
+                    tools:ignore="HardcodedText" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="101.000đ - 150.000đ"
+                    tools:ignore="HardcodedText" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="151.000đ - 200.000đ"
+                    tools:ignore="HardcodedText" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="> 200.000đ"
+                    tools:ignore="HardcodedText" />
+
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rating"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                tools:ignore="HardcodedText" />
+
+            <RadioGroup
+                android:id="@+id/filter_radio_group_rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="\u2605 \u2606 \u2606 \u2606 \u2606"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="28sp"
+                    tools:ignore="HardcodedText" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="\u2605 \u2605 \u2606 \u2606 \u2606"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="28sp"
+                    tools:ignore="HardcodedText" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="\u2605 \u2605 \u2605 \u2606 \u2606"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="28sp"
+                    tools:ignore="HardcodedText" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="\u2605 \u2605 \u2605 \u2605 \u2606"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="28sp"
+                    tools:ignore="HardcodedText" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="\u2605 \u2605 \u2605 \u2605 \u2605"
+                    android:textColor="@color/yellow_primary"
+                    android:textSize="28sp"
+                    tools:ignore="HardcodedText" />
+
+            </RadioGroup>
+
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end">
+
+                <Button
+                    android:id="@+id/cancel_filter"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel"
+                    android:textColor="@color/black"
+                    android:backgroundTint="#F1F1F1"
+                    android:layout_marginEnd="10dp"
+                    tools:ignore="HardcodedText" />
+
+                <Button
+                    android:id="@+id/apply_filter"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Apply filter"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/black"
+                    android:layout_marginEnd="10dp"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

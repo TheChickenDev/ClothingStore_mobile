@@ -1,6 +1,9 @@
 package models;
 
-public class UserModel {
+import java.io.Serializable;
+import java.util.List;
+
+public class UserModel implements Serializable {
     String _id;
     String name;
     String email;
@@ -8,6 +11,30 @@ public class UserModel {
     String address;
     String phone;
     String avatar;
+    List<ClothCartModel> cart;
+
+    public UserModel(String _id, String name, String email, String password, String address, String phone, String avatar, List<ClothCartModel> cart) {
+        this._id = _id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.phone = phone;
+        this.avatar = avatar;
+        this.cart = cart;
+    }
+
+    public String getTotalPay() {
+        if (cart.isEmpty())
+            return "0";
+        double totalPrice = 0.0;
+        for (ClothCartModel item : cart) {
+            double price = Double.parseDouble(item.getPrice());
+            int quantity = Integer.parseInt(item.getQuantity());
+            totalPrice += price * quantity;
+        }
+        return String.valueOf(totalPrice);
+    }
 
     public String getId() {
         return _id;
@@ -63,5 +90,13 @@ public class UserModel {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public List<ClothCartModel> getCart() {
+        return cart;
+    }
+
+    public void setCart(List<ClothCartModel> cart) {
+        this.cart = cart;
     }
 }

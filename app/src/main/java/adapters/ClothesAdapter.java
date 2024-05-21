@@ -3,6 +3,7 @@ package adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,16 +15,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.clothingstore.ProductCardActivity;
 import com.example.clothingstore.R;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
-import models.ClothModel;
+import models.ProductModel;
 
 public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHolder> {
     Context context;
-    List<ClothModel> array;
-    public ClothesAdapter(Context context, List<ClothModel> array) {
+    List<ProductModel> array;
+    public ClothesAdapter(Context context, List<ProductModel> array) {
         this.context = context;
         this.array = array;
     }
@@ -38,22 +42,19 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.MyViewHo
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        ClothModel clothes = array.get(position);
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), HomeActivity.class);
-//                Bundle b = new Bundle();
-//                b.putString("idclothes", clothesModel.getId());
-//                b.putString("imgclothes", clothesModel.getImg());
-//                b.putString("nameclothes", clothesModel.getName());
-//                b.putString("priceclothes", clothesModel.getPrice());
-//                intent.putExtras(b);
-//                v.getContext().startActivity(intent);
-//            }
-//        });
+        ProductModel clothes = array.get(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ProductCardActivity.class);
+                intent.putExtra("productId", clothes.getId());
+                v.getContext().startActivity(intent);
+            }
+        });
         holder.nameSP.setText(clothes.getName());
-        holder.priceSP.setText(clothes.getPrice() + "vnd");
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.GERMANY);
+        String formattedPrice = numberFormat.format(Integer.parseInt(clothes.getPrice())) + "vnd";
+        holder.priceSP.setText(formattedPrice);
         Glide.with(context)
                 .load(clothes.getImg())
                 .into(holder.images);

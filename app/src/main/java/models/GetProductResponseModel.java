@@ -3,23 +3,23 @@ package models;
 import java.util.List;
 
 public class GetProductResponseModel {
-    private List<ClothModel> products;
+    private List<ProductModel> products;
     private String currentPage;
     private  String totalPage;
     private  String totalProduct;
 
-    public GetProductResponseModel(List<ClothModel> products, String currentPage, String totalPage, String totalProduct) {
+    public GetProductResponseModel(List<ProductModel> products, String currentPage, String totalPage, String totalProduct) {
         this.products = products;
         this.currentPage = currentPage;
         this.totalPage = totalPage;
         this.totalProduct = totalProduct;
     }
 
-    public List<ClothModel> getProducts() {
+    public List<ProductModel> getProducts() {
         return products;
     }
 
-    public void setProducts(List<ClothModel> products) {
+    public void setProducts(List<ProductModel> products) {
         this.products = products;
     }
 

@@ -1,8 +1,6 @@
 package com.example.clothingstore;
 
-import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -10,7 +8,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
-import com.example.clothingstore.databinding.ActivityHomeBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             else if (itemId == R.id.navigation_products) {
-                ChangeFragment(new ProductsFragment());
+                ChangeFragment(new ShopFragment());
                 return true;
             }
             else if (itemId == R.id.navigation_settings) {
@@ -43,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private void ChangeFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.replace(R.id.main_frame_layout, fragment);
         fragmentTransaction.commit();
     }
 }

@@ -5,10 +5,58 @@
     android:layout_height="match_parent"
     tools:context=".SettingsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Settings" />
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+        <Button
+            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/setting_btn_profile"
+            android:gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My profile"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <Button
+            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/setting_btn_orders"
+            android:gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My orders"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <Button
+            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/setting_btn_logout"
+            android:gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Log out"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+    </LinearLayout>
 
 </FrameLayout>

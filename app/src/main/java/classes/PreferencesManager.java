@@ -18,6 +18,12 @@ public class PreferencesManager {
         editor.putString("Id", id);
         editor.apply();
     }
+    public void saveAccessToken(String token) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Access_token", token);
+        editor.apply();
+    }
     public String getEmail() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
         return sharedPreferences.getString("Email", "");
@@ -30,14 +36,20 @@ public class PreferencesManager {
         SharedPreferences sharedPreferences = context.getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
         return sharedPreferences.getString("Id", "");
     }
+    public String getAccessToken() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("Access_token", "");
+    }
+    public String getRefreshToken() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("Refresh_token", "");
+    }
     public boolean isUserLoggedOut() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
-        boolean isAccessTokenEmpty = sharedPreferences.getString("Access_token", "").isEmpty();
-        boolean isRefreshTokenEmpty = sharedPreferences.getString("Refresh_token", "").isEmpty();
         boolean isEmailEmpty = sharedPreferences.getString("Email", "").isEmpty();
         boolean isPasswordEmpty = sharedPreferences.getString("Password", "").isEmpty();
         boolean isIdEmpty = sharedPreferences.getString("Id", "").isEmpty();
-        return isAccessTokenEmpty || isRefreshTokenEmpty || isEmailEmpty || isPasswordEmpty || isIdEmpty;
+        return isEmailEmpty || isPasswordEmpty || isIdEmpty;
     }
 
     public void removeLoginDetails() {
